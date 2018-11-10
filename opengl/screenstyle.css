@@ -1,5 +1,7 @@
 
-@import url(https://fonts.googleapis.com/css?family=Gudea);
+/* @import url(https://fonts.googleapis.com/css?family=Gudea);
+*/
+@import url(https://fonts.googleapis.com/css?family=Tangerine);
 
 <style type="text/css"  media="all" >  /* Eric Meyer's Reset CSS v2.0 - http://cssreset.com */
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,
@@ -31,7 +33,7 @@ html
 }
 body
 {
-    font-family: Gudea, sans-serif;
+    font-family: Tangerine, sans-serif;
     font-weight: 400;
     font-stretch: normal;
     display: block;
