@@ -86,11 +86,11 @@ a
     text-decoration: none;
 }
 
-a.link { color: maroon }
-a.visited { color: gray }
-a.focus { color: maroon; background-color: #ffd9d9 }
-a.hover { color: maroon; background-color: #ffd9d9 }
-a.active {color: red; background-color: #ffd9d9 }
+a.link { color: maroon; }
+a.visited { color: gray; }
+a.focus { color: maroon; background-color: #ffd9d9; }
+a.hover { color: maroon; background-color: #ffd9d9; }
+a.active {color: red; background-color: #ffd9d9; }
 
 h2
 {
