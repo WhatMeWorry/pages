@@ -122,8 +122,8 @@ ul {
     margin: 0;
     padding: 0;
     width: 200px;
-    background-color: #f1f1f1;
-    border: 1px solid #555;
+    background-color: rgb(166, 166, 166);
+    border: 3px solid rgb(85, 85, 85);
 }
 
 li a {
