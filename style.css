@@ -24,13 +24,11 @@ section{display:block}  body{line-height:1} ol, ul{list-style:none} blockquote, 
 q:before, q:after{content:none} table{border-collapse:collapse; border-spacing:0}
 
 
-html
-{
+html {
     font-size: 100%;  /* maintain the browser's default font size, for all modern browers this is 16px. (1rem = 16px) */
 }
 
-body
-{
+body {
     font-family: Gudea, sans-serif;
     font-weight: 400;
     font-stretch: normal;
@@ -41,8 +39,7 @@ body
     background-color: #eee;
 }
 
-header
-{
+header {
     display: block;
     width: 90%;
     max-width: 1100px;
@@ -58,21 +55,18 @@ header
 
 
 
-h1
-{
+h1 {
     font-size: 2.0rem;
     padding: 1.2rem;
     margin: 0em 0em 2.4rem 1.2rem;
     color: #444;
 }
 
-/*
-a
-{
+
+a {
     font-size: 1.75rem;	
     text-decoration: none;
 }
-*/
 
 /*
 Note: a:hover MUST come after a:link and a:visited in the CSS definition in order to be effective.
@@ -86,23 +80,20 @@ a:hover   { color: green; }
 a:active  { color: red;  }
 */
 
-h2
-{
+h2 {
     font-size: 1.75rem;
     padding: 0.34rem;
     margin: 4rem 0rem 1rem -0.5rem;
     color: #444;
 }
 
-p
-{
+p {
     padding: 1rem 2rem;
     padding: 1rem 2rem;
     max-width: 80rem;
 }
 
-ol
-{
+ol {
     margin: 0.85rem;
 }
 
@@ -111,23 +102,15 @@ ul {
     margin: 0;
     padding: 0;
     width: 200px;
-    background-color: rgb(166, 166, 166);
+    background-color: rgb(241, 241, 241);
     border: 3px solid rgb(85, 85, 85);
 }
 
 
-a {
-    display: block;
-    border-style: dashed;
-    color: rgb(250, 0, 0);
-    padding: 8px 16px;
-    text-decoration: none;
-}
 
 li a {
     display: block;
-    border-style: dashed;
-    color: rgb(0, 255, 0);
+    color: black;
     padding: 8px 16px;
     text-decoration: none;
 }
@@ -135,7 +118,7 @@ li a {
 
 li {
     text-align: center;
-    border-bottom: 1px solid #555;
+    border-bottom: 1px solid black;
 }
 
 li:last-child {
@@ -144,25 +127,15 @@ li:last-child {
 
 
 li a.active {
-    background-color: #4CAF50;
+    background-color: rgb(62,115,71);
     color: white;
 }
 
 li a:hover:not(.active) {
-    background-color: #555;
+    background-color: rgb(85, 85, 85);
     color: white;
 }
 
-
-/*
-li
-{
-    display: list-item;
-    list-style: square;
-    margin: 0rem 0rem 0rem 6rem;
-    padding: 0.34rem;
-}
-*/
 
 
 
