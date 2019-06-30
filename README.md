@@ -1,5 +1,6 @@
 # pages
-project dedicated to my github web site.
+https://whatmeworry.github.io/pages/
+project dedicated to my D language and OpenGL web site.
 
 This project exists for two primary reasons, to make the best modern OpenGL (4.0+) introduction possible, and to teach myself HTML5 and CSS3.
 
