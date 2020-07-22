@@ -29,6 +29,31 @@ What are benefits of using pointers-to-objects?
 - can use opaque (incomplete) types, suceh as FILE*, where the client need not know the full type.
 - Simple call/return inferface, typically one machine word per argument and a register return value. Note that K&R declarations didn't include arguments
 
+Pointers Problems
+- where does the object live (and how to tell?)
+- Local object should not be returned or you will get a so-called dangling pointer *
+   so we need to get ahold of memory from somewhere, how about the heap? That's ok, we will allocate memory on the heap and return the pointer.
+   Whose responsiblity is it now to destroy the object?  Mine? ... well only if it is a heap object.  Suppose they decided to return instead the address of a static object?
+   how can I tell from pointer star whether I've been given a heap object or a static object?  So you end up with conventions, you end up with people putting names in functions to indicate whether or not they are returning new memory static memory. (sarcatically, or we just leak, hey memory is cheap right now, just leak abit.
+- Heap objects have to be managed to ensure their deletion - who owns the object
+- pointers might be invalid.
+- pointers might be null - 
+* this is sad because the local structure does not need to be allocated. It's just there on the stack. There is no cost of allocation. You just return a pointer to it. The problem is the stack gets unwound and your object disappears.
+
+In 1989, ANSI C arrived:
+
+quote
+The main change made by the ANSI standard is to define structure assignment - structures may be copied and assigned to, passed to functions, and returned by functi
+endquote
+
+How does this magic work?
+
+- We are used to passing structure by value but we many not think about how it works.
+
+
+
+
+
 
 
 
