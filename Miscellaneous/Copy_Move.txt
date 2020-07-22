@@ -1,0 +1,34 @@
+
+
+YouTube talk and ACCU 2018 called "Nothing is Better than Copy or Move"
+
+https://www.youtube.com/watch?v=-dc5vqt2tgA
+
+How to handle the cost of copies of objects?  How did we get here in C++?
+
+C standard, 1978 1st edition of The "C Programming Language" says:
+
+quote
+6.2 Structures and Functions
+There are a number of restrictions on C structures. The essential rules are that the only operations that you can perform on a structure are:
+take its address with & and
+access one of its members.
+end quote
+
+This implies that structures may not be assigned to or copied as a unit, and that they can not be passed to or returned from functions.
+
+So in K&R C the only option for argument passing and return was to use pointers.
+This is mapping into a high level language the assembly language model of passing and returning addresses of data structures in registes.
+Some of the C runtime functions still follow this model  struct tm *localtime(const time_t  *timer);
+and of course this is still valid in C++
+
+What are benefits of using pointers-to-objects?
+
+- effeciency, since pointer values can be passed in registers
+- only one object (the pointer), so transfer cost is independent of size
+- can use opaque (incomplete) types, suceh as FILE*, where the client need not know the full type.
+- Simple call/return inferface, typically one machine word per argument and a register return value. Note that K&R declarations didn't include arguments
+
+
+
+
