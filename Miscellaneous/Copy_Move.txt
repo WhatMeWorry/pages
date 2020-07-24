@@ -1,6 +1,6 @@
 
 
-YouTube talk and ACCU 2018 called "Nothing is Better than Copy or Move"
+YouTube talk and ACCU 2018 called "Nothing is Better than Copy or Move" by Roger Orr
 
 https://www.youtube.com/watch?v=-dc5vqt2tgA
 
@@ -17,31 +17,36 @@ end quote
 
 This implies that structures may not be assigned to or copied as a unit, and that they can not be passed to or returned from functions.
 
-So in K&R C the only option for argument passing and return was to use pointers.
-This is mapping into a high level language the assembly language model of passing and returning addresses of data structures in registes.
-Some of the C runtime functions still follow this model  struct tm *localtime(const time_t  *timer);
-and of course this is still valid in C++
+- So in K&R C the only option for argument passing and return was to use pointers.  (time 3:18)
+- This is mapping into a high level language the assembly language model of passing and returning addresses of data structures in registers.
+- Some of the C runtime functions still follow this model  struct tm *localtime(const time_t  *timer);
+- and of course this is still valid in C++
 
-What are benefits of using pointers-to-objects?
+Some benefits of using pointers-to-objects?  (time 4:02)
 
 - effeciency, since pointer values can be passed in registers
-- only one object (the pointer), so transfer cost is independent of size
+   you could put everything in a register whether you were returning a number or a pointer, it didn't matter, it fitted in the one register which would have a machine word in it. It doesn't matter how bit that structure is you are just passing a pointer. You can use opaque types. so in C when you open a file you get back a an opaque type (a FILE*)
+   What's in a file? Well, you don't care. It's not your problem. In fact, it's not that easy to find out. It is an opaque type but it comes back as a pointer. It is a very simple interface, you did not need function prototypes because you had three arguments, you put three registers values on the stack and you get back one. Nice and simple but a little bit inflexible.
+   
+- only one object (the pointer), so transfer cost is independent of size of the structure
 - can use opaque (incomplete) types, suceh as FILE*, where the client need not know the full type.
-- Simple call/return inferface, typically one machine word per argument and a register return value. Note that K&R declarations didn't include arguments
+- Simple call/return inferface, typically one machine word per argument and a register return value. (Note that K&R declarations didn't include arguments)
 
-Pointers Problems
+Pointers Problems  (time 5:08)
 - where does the object live (and how to tell?)
-- Local object should not be returned or you will get a so-called dangling pointer *
-   so we need to get ahold of memory from somewhere, how about the heap? That's ok, we will allocate memory on the heap and return the pointer.
+- Local objects should not be returned or you will get a so-called dangling pointer 
+   Who thinks it is a good idea to return a local object sitting on our stack out of our function? The advantage of a local structure is you haven't got to worry about allocating it. It is just there on the stack. There is no cost of allocation. It is just ther on the stack, you just return a pointer to it. Problem is just after you have   returned a pointer from it, the stack gets unwount and your object disappears. Puff. And now you got a pointer points to who knows what.
+   So we need to get ahold of memory from somewhere, how about the heap? That's ok, we will allocate memory on the heap and return the pointer.
    Whose responsiblity is it now to destroy the object?  Mine? ... well only if it is a heap object.  Suppose they decided to return instead the address of a static object?
    how can I tell from pointer star whether I've been given a heap object or a static object?  So you end up with conventions, you end up with people putting names in functions to indicate whether or not they are returning new memory static memory. (sarcatically, or we just leak, hey memory is cheap right now, just leak abit.
 - Heap objects have to be managed to ensure their deletion - who owns the object
 - pointers might be invalid.
 - pointers might be null - 
+
 * this is sad because the local structure does not need to be allocated. It's just there on the stack. There is no cost of allocation. You just return a pointer to it. The problem is the stack gets unwound and your object disappears.
 
-In 1989, ANSI C arrived:
-
+In 1989, ANSI C arrived:    (time 7:51)
+In the interveniening years, learned how to copy things.
 quote
 The main change made by the ANSI standard is to define structure assignment - structures may be copied and assigned to, passed to functions, and returned by functi
 endquote
