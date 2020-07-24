@@ -57,7 +57,16 @@ So you could now create a structure and copy it into the calling function or ret
 How does this magic work?   (time 9:05)
 
 - We're used to passing structures by value but we may not know how it works. 
-    So let's think about passing a structure into a function. (That's the easiest one)  what do I need to do. Well, I need some memory to put the structure in. So where do I get the memory? On the stack obviously, so push the stack down abit. I now have gotten   jhiipy 
+    So let's think about passing a structure into a function. (That's the easiest one)  what do I need to do. Well, I need some memory to put the structure in. So where do I get the memory? On the stack obviously, so push the stack down a bit. I now have gotten my memory, copy the data in, and there it is. As long as the receiving function knows how to find that block of memory, everything is good.  So what you can do in the calling convention is the caller knows that the second argument is a structure so it is expecting to find it on the stack that kind of return address plus a word. That is where the structure will be. There are other ways of doing it but that is simplest and probably most effecient way of doing using the stack.
+
+- For example, with a simple stack based calling convention:
+
+void foo(int arg1, example arg2, int arg3);
+void bar()
+{
+    example ex = { /*...*/ };
+    foo(1, ex, 2);
+}
 
 
 
