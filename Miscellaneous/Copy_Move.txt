@@ -51,7 +51,15 @@ quote
 The main change made by the ANSI standard is to define structure assignment - structures may be copied and assigned to, passed to functions, and returned by functi
 endquote
 
-How does this magic work?
+So you could now create a structure and copy it into the calling function or return a structure by copy and that was the main change for structures in ANSI C. And they've been supported now for a number of compilers which is a good thing.
+
+
+How does this magic work?   (time 9:05)
+
+- We're used to passing structures by value but we may not know how it works. 
+    So let's think about passing a structure into a function. (That's the easiest one)  what do I need to do. Well, I need some memory to put the structure in. So where do I get the memory? On the stack obviously, so push the stack down abit. I now have gotten   jhiipy 
+
+
 
 - We are used to passing structure by value but we many not think about how it works.
 
