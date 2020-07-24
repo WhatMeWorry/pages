@@ -1,8 +1,6 @@
 
 
-YouTube talk and ACCU 2018 called "Nothing is Better than Copy or Move" by Roger Orr
-
-https://www.youtube.com/watch?v=-dc5vqt2tgA
+YouTube talk and from ACCU 2018 called [Nothing is Better than Copy or Move](https://www.youtube.com/watch?v=-dc5vqt2tgA) by Roger Orr.
 
 How to handle the cost of copies of objects?  How did we get here in C++?
 
