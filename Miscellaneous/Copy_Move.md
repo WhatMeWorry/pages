@@ -10,8 +10,8 @@ C standard, 1978 1st edition of The "C Programming Language" says:
 6.2 Structures and Functions
 There are a number of restrictions on C structures. The essential rules are that the only operations  
 that you can perform on a structure are:  
-**take its address with the _&_ operator**
-**access one of its members**
+take its address with the & operator
+access one of its members
 ```
 
 This implies that structures may not be assigned to or copied as a unit, and that they can not be passed to or returned from functions.
@@ -31,7 +31,7 @@ Some benefits of using pointers-to-objects?   [time 4:02](https://www.youtube.co
 - can use opaque (incomplete) types, suceh as FILE*, where the client need not know the full type.
 - Simple call/return inferface, typically one machine word per argument and a register return value. (Note that K&R declarations didn't include arguments)
 
-Pointers Problems  (time 5:08)
+Pointers Problems   [time 5:08](https://www.youtube.com/watch?v=-dc5vqt2tgA?t=05m08s)
 - where does the object live (and how to tell?)
 - Local objects should not be returned or you will get a so-called dangling pointer 
    Who thinks it is a good idea to return a local object sitting on our stack out of our function? The advantage of a local structure is you haven't got to worry about allocating it. It is just there on the stack. There is no cost of allocation. It is just ther on the stack, you just return a pointer to it. Problem is just after you have   returned a pointer from it, the stack gets unwount and your object disappears. Puff. And now you got a pointer points to who knows what.
@@ -44,7 +44,7 @@ Pointers Problems  (time 5:08)
 
 * this is sad because the local structure does not need to be allocated. It's just there on the stack. There is no cost of allocation. You just return a pointer to it. The problem is the stack gets unwound and your object disappears.
 
-In 1989, ANSI C arrived:    (time 7:51)
+In 1989, ANSI C arrived:    [time 7:51](https://www.youtube.com/watch?v=-dc5vqt2tgA?t=07m51s)
 In the interveniening years, learned how to copy things.
 quote
 The main change made by the ANSI standard is to define structure assignment - structures may be copied and assigned to, passed to functions, and returned by functi
@@ -53,7 +53,7 @@ endquote
 So you could now create a structure and copy it into the calling function or return a structure by copy and that was the main change for structures in ANSI C. And they've been supported now for a number of compilers which is a good thing.
 
 
-How does this magic work?   (time 9:05)
+How does this magic work?   [time 9:05](https://www.youtube.com/watch?v=-dc5vqt2tgA?t=09m05s)
 
 - We're used to passing structures by value but we may not know how it works. 
     So let's think about passing a structure into a function. (That's the easiest one)  what do I need to do. Well, I need some memory to put the structure in. So where do I get the memory? On the stack obviously, so push the stack down a bit. I now have gotten my memory, copy the data in, and there it is. As long as the receiving function knows how to find that block of memory, everything is good.  So what you can do in the calling convention is the caller knows that the second argument is a structure so it is expecting to find it on the stack that kind of return address plus a word. That is where the structure will be. There are other ways of doing it but that is simplest and probably most effecient way of doing using the stack.
