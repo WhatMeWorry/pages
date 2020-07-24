@@ -16,12 +16,12 @@ access one of its members
 
 This implies that structures may not be assigned to or copied as a unit, and that they can not be passed to or returned from functions.
 
-- So in K&R C the only option for argument passing and return was to use pointers.  [time 3:15](https://www.youtube.com/watch?v=-dc5vqt2tgA?t=03m15s) 
+- So in K&R C the only option for argument passing and return was to use pointers.  [time 3:15](https://www.youtube.com/watch?v=-dc5vqt2tgA#t=03m15s) 
 - This is mapping into a high level language the assembly language model of passing and returning addresses of data structures in registers.
 - Some of the C runtime functions still follow this model  struct tm *localtime(const time_t  *timer);
 - and of course this is still valid in C++
 
-Some benefits of using pointers-to-objects?   [time 4:02](https://www.youtube.com/watch?v=-dc5vqt2tgA?t=04m02s)
+Some benefits of using pointers-to-objects?   [time 4:02](https://www.youtube.com/watch?v=-dc5vqt2tgA#t=04m02s)
 
 - effeciency, since pointer values can be passed in registers
    you could put everything in a register whether you were returning a number or a pointer, it didn't matter, it fitted in the one register which would have a machine word in it. It doesn't matter how bit that structure is you are just passing a pointer. You can use opaque types. so in C when you open a file you get back a an opaque type (a FILE*)
