@@ -106,8 +106,10 @@ We reserve space on the stack for our strusture because it probably won't fit in
     - Passes the address of this space to the called function as a (hidden) argument
     
 Made up pseudo-code for:  
+```
     T foo(int arg) { /*...*/ return local_var; }
 ```
+
 Caller:  
 ```
 T x = foo(42)
@@ -127,7 +129,20 @@ void foo(void* __return_udt, int arg)
 }  
 ```
 
-```
+- C++ was originally called "C with Classes"     [time 16:49](https://www.youtube.com/watch?v=-dc5vqt2tgA#t=16m49s)
+- Of particular interest here structures and classes could have special member functions:  
+    - Constructor  
+    - Copy Constructor  
+    - Assignment operator  
+    - Destructor  
+- These user defined functions replaced the default memcpy-like behaviour of ASCI C
+
+    
+    
+- While the member functions enable the perservation of invariants, they can make copying and    [time 17:39](https://www.youtube.com/watch?v=-dc5vqt2tgA#t=17m39s)  
+assigning objects considerably more expensive  
+- Additionally, while the compiler might be able to remove the calls to the functions during optimization, this is often not possible  
+- In particular, if the calls have (or might have) side effects the optimiser cannot remove them  
 
 
 
