@@ -8,7 +8,9 @@ C standard, 1978 1st edition of The "C Programming Language" says:
 
 ```
 6.2 Structures and Functions
-There are a number of restrictions on C structures. The essential rules are that the only operations that you can perform on a structure are:
+There are a number of restrictions on C structures. The essential rules are that the only operations  
+that you can perform on a structure are:  
+
 - **take its address with _&_ operator**
 - **access one of its members**
 ```
