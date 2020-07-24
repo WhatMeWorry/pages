@@ -46,7 +46,8 @@ In 1989, ANSI C arrived:    [time 7:51](https://www.youtube.com/watch?v=-dc5vqt2
 In the interveniening years, learned how to copy things.
 
 ```
-The main change made by the ANSI C standard is to define structure assignment - structures may be copied and assigned to, passed to functions, and returned by functions.
+The main change made by the ANSI C standard is to define structure assignment - structures may be copied and assigned to,  
+passed to functions, and returned by functions.
 ```
 
 
@@ -104,7 +105,30 @@ We reserve space on the stack for our strusture because it probably won't fit in
     - Reserves stack space in the caller for the return value  
     - Passes the address of this space to the called function as a (hidden) argument
     
-    
+Made up pseudo-code for:  
+    T foo(int arg) { /*...*/ return local_var; }
+```
+Caller:  
+```
+T x = foo(42)
+
+char _return_udt[(sizeof(T)];  
+foo(__return_udt, 42);
+T x;
+memcopy(&x, __return_udt, sizeof(T));
+```
+
+Callee:
+```
+void foo(void* __return_udt, int arg)  
+{  
+    /* ... */  
+    memcopy(__return_udt, &local_var, sizeof(T));  
+}  
+```
+
+```
+
 
 
 
