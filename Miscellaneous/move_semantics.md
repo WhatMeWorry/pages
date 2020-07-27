@@ -21,17 +21,15 @@ first pointer points to the beginning of the array, the second pointer points to
 part of the array, and then you might have some "unconstructed" memory in the array. The first pointer is
 the "owner".  How do you copy one of these guys.  It's very easy: 
 
-#### Vector Copy
+## Vector Copy
 
 ![vector1 image](https://github.com/WhatMeWorry/pages/blob/master/Miscellaneous/vector1.png)
 
-You first make a copy of the dynamically allocated array  
-
+You first make a copy of the dynamically allocated array
 
 ![vector2 image](https://github.com/WhatMeWorry/pages/blob/master/Miscellaneous/vector2.png)
 
-
-You then make a copy of the three pointers and make these knew pointers point to the new array  
+You then make a copy of the three pointers and make these knew pointers point to the new array
 
 ![vector3 image](https://github.com/WhatMeWorry/pages/blob/master/Miscellaneous/vector3.png)
 
@@ -42,11 +40,9 @@ is to allocate memory.  The second most expensive thing you can do is to dealloc
 
 #### Vector Move
 
-
 ![vector4 image](https://github.com/WhatMeWorry/pages/blob/master/Miscellaneous/vector4.png)
 
-To move a vector, just copy the 3 pointer vector, which of the new vector will identically point
-to the array. That is all move semantics is. 
+To move a vector, just copy the 3 pointer vector, which will automatically point to the array. That is all move semantics is. 
 
 ![vector5 image](https://github.com/WhatMeWorry/pages/blob/master/Miscellaneous/vector5.png)
 
