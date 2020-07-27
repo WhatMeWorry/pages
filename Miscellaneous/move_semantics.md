@@ -16,6 +16,14 @@ Everything else just rode along on its coattails.
 Hinnant wanted his vector to be faster than anybody else's vector. Youstudying  can learn everything you  
 can about move semantics by studying vector.
 
+![vector1 image](https://github.com/WhatMeWorry/pages/blob/master/Miscellaneous/vector1.png)
+
+jsfdlkj;dsf
+
+![vector2 image](https://github.com/WhatMeWorry/pages/blob/master/Miscellaneous/vector2.png)
+
+lksdf;kfsa
+![vector3 image](https://github.com/WhatMeWorry/pages/blob/master/Miscellaneous/vector3.png)
 
 
 ```
