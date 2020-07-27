@@ -45,12 +45,14 @@ is to allocate memory.  The second most expensive thing you can do is to dealloc
 
 ![vector4 image](https://github.com/WhatMeWorry/pages/blob/master/Miscellaneous/vector4.png)
 
-sdfsfsad
-
+To move a vector, just copy the 3 pointer vector, which of the new vector will identically point
+to the array. That is all move semantics is. 
 
 ![vector5 image](https://github.com/WhatMeWorry/pages/blob/master/Miscellaneous/vector5.png)
 
-lkjdsfl;kj;lfdsk
+Then you set the original verctor to null.  You don't deallocate the array, you don't allocate the
+array, you literally "steal" this array from that guy and justset everything in it to null and in the 
+original indicating that it does not own anything anymore.
 
 ![vector6 image](https://github.com/WhatMeWorry/pages/blob/master/Miscellaneous/vector6.png)
 
