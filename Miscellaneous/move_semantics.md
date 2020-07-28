@@ -9,7 +9,7 @@ He was instrumental in getting move semantics info C++ '11  (2011)
 - Best practices for the move members
 - Details, details,...
 
-How Did Move emantics Get Started?  
+How Did Move semantics Get Started?  
 It was all about optimizing std::vector<T>  
 Everything else just rode along on its coattails.
 
@@ -21,7 +21,7 @@ first pointer points to the beginning of the array, the second pointer points to
 part of the array, and then you might have some "unconstructed" memory in the array. The first pointer is
 the "owner".  How do you copy one of these guys.  It's very easy: 
 
-## Vector Copy
+## Vector Copy       [time 4:13](https://www.youtube.com/watch?v=vLinb2fgkHk#t=04m13s)
 
 ![vector1 image](https://github.com/WhatMeWorry/pages/blob/master/Miscellaneous/vector1.png)
 
@@ -38,7 +38,9 @@ is to allocate memory.  The second most expensive thing you can do is to dealloc
 
 **Dealing with the heap is very expensive.**
 
-#### Vector Move
+---
+
+## Vector Move   [time 5:04](https://www.youtube.com/watch?v=vLinb2fgkHk#t=05m04s)
 
 ![vector4 image](https://github.com/WhatMeWorry/pages/blob/master/Miscellaneous/vector4.png)
 
@@ -52,7 +54,26 @@ original indicating that it does not own anything anymore.
 
 ![vector6 image](https://github.com/WhatMeWorry/pages/blob/master/Miscellaneous/vector6.png)
 
-sdffd
+## Special Member Functions
+
+Special members are those member functions that the compiler can be asked to automatically generate code for.
+(do you ask explicitly or implicitly?)
+So if you are familiar with C++ 98 no three (Oh three?) you already know you've got the default constructor, the copy constructor the compiler will sometimes generate these for you. These are special members.  
+
+How many are there?
+
+in C++ 11 there are now 6 special members.  In C++ 98 03 there were only 4. we've added two more, sorry, my fault.
+
+
+| Special Members       | Implemetation |
+| -------------         | ------------- |
+| Cdefault constructor  | X();          |
+| destructor            | ~X();         |
+| copy constructor      | X(X const&);  |
+| copy assignment       | X& operator=(X const&);  |
+
+
+
 
 
 
