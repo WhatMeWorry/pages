@@ -54,7 +54,7 @@ original indicating that it does not own anything anymore.
 
 ![vector6 image](https://github.com/WhatMeWorry/pages/blob/master/Miscellaneous/vector6.png)
 
-## Special Member Functions
+## Special Member Functions    [time 5:44](https://www.youtube.com/watch?v=vLinb2fgkHk#t=05m44s)
 
 Special members are those member functions that the compiler can be asked to automatically generate code for.
 (do you ask explicitly or implicitly?)
@@ -67,11 +67,17 @@ in C++ 11 there are now 6 special members.  In C++ 98 03 there were only 4. we'v
 
 | Special Members       | Implemetation |
 | -------------         | ------------- |
-| Cdefault constructor  | X();          |
+| default constructor   | X();          |
 | destructor            | ~X();         |
 | copy constructor      | X(X const&);  |
 | copy assignment       | X& operator=(X const&);  |
 
+C++ 11 added two more.
+
+| Special Members       | Implemetation |
+| -------------         | ------------- |
+| move constructor      | X(X&&);       |
+| move assignment       | X& operator=(X&&);       |
 
 
 
