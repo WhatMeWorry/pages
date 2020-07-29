@@ -38,3 +38,24 @@ An R value does not always have to be a literal. It can also be the result of a 
 
 Now because GetValue returns an R value, If we try and assign something to that R value it is not going to work. So **GetValue() = 5;** is not going to work.
 
+However, this is where it get interesting. 
+
+```
+//int& GetValue()
+int GetValue()
+{
+    static int value = 10;
+    return value;
+}
+
+void main()
+{
+	GetValue() = 5;  // line 13
+}
+
+values.d(13): Error: GetValue() is not an lvalue and cannot be modified
+```
+
+if this was to return an L value which we could do by doing an int reference (this is called an L value reference) then I would require some type of storage for my value (maybe by using a static ing like above and then returning it. if this is the case, since this is now and L value pretending to be a L value reference, I can assign to it  
+
+
