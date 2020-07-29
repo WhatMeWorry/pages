@@ -1,6 +1,6 @@
 
 
-YouTube talk from The Cherno [lvalues and rvalues in C++](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s) by Cherno...
+YouTube talk from The Cherno [lvalues and rvalues in C++](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s) by Yan Chernikov
 
 
 Simple definition of what an lvalue and an rvalue is:  [time 4:19](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s#t=04m19s)
@@ -90,22 +90,33 @@ void main()
 To expand on the this a bit, if I had the function [time 6:55](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s#t=06m55s) that set a value like below:
 
 ```
-void SetValue(int value)
-
-
-void SetValue(int& value)
+void SetValue(int value)  // L value (Location value - memory)
 {
+    writeln("This function works with either an L value or an R value");
 }
 
 void main()
 {
     int i = 10;
-    SetValue(i);  // calling SetValue with an L value
-    SetValue(10); // calling SetValue with an R value
+    SetValue(i);   // calling with an L value
+    SetValue(10);  // calling with a temporary R value      
+}
+```
+I could call this function a number of ways. I can call it with an L value or an R value. In SetValue(10), The 10 is a temporary R value. This R value will be used to create an 
+L value when the function is actually called.
+
+
+Another rule is you cannot take an L value reference from an R value. So you can only have a L value reference of an L value.  I can demonstrate this by trying to pass an R value into 
+
+```
+void SetValue(ref int value)  // L value (Location value - memory)
+{
+}
+
+void main()
+{
+    SetValue(10);  // this will not compile      
 }
 ```
 
-I could call this function a number of ways. I can call it with an L value or an R value. In SetValue(10), The 10 is a temporary R value.
-
-Another rule is you can not take a L value reference from a R value. So you could only have a L value reference from an L value.  
-
+The compiler will display the error: __cannot pass rvalue argument 10 of type int to parameter ref int value__
