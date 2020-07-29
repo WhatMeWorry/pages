@@ -1,9 +1,9 @@
 
 
-YouTube talk from The Cherno [lvalues and rvalues in C++](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s#t=04m13s) by Cherno...
+YouTube talk from The Cherno [lvalues and rvalues in C++](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s) by Cherno...
 
 
-Simple definition of what an lvalue and an rvalue is:
+Simple definition of what an lvalue and an rvalue is:  [time 4:19](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s#t=04m19s)
 
 
 
@@ -18,8 +18,9 @@ void main()
 
 We have two parts to the above expression: we have a left side and a right side and this is also another good way to think about what an L value is and an R value is. An L value is, a lot of the times, something that is on the left side of the equal sign and then an R value is something that is on the right side of the equal sign. Now this does not always apply so do not think that is universally true.
 
-We have a variable called i which is of course an actual variable with a location in memory and then we simply have a value, just a numeric literal. It is just ten. It has no storage. (Probably just exists as a constant temporaryily set in a register)   This makes sense because you can not assign something to an R value. You can't write **10 = i;** That would be weird because 10 is not something that does has a location.  We could write another line underneath it with **int a = i;** Here we are setting an Lvalue equal to something it is also an L value which is why to say the right side always is a R value is wrong.  
+We have a variable called i which is of course an actual variable with a location in memory and then we simply have a value, just a numeric literal. It is just ten. It has no storage. (Probably just exists as a constant temporarily set in a register)   This makes sense because you can not assign something to an R value. You can't write **10 = i;** That would be weird because 10 is not something that has a location. We could write another line underneath it with **int a = i;** Here we are setting an Lvalue equal to something that is also an L value which is why to say the right side always is a R value is wrong.  
 
+R value as a non-literal   [time 5:34](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s#t=05m34s)
 
 ```
 int GetValue()
@@ -33,12 +34,12 @@ void main()
 }
 ```
 
-An R value does not always have to be a literal. It can also be the result of a function. Maybe we have a function called GetValue() which returns 10. In this case GetValue() returns an R value. It returns a temporary value. It's temporary because even though it returns an int, it has location. It has no storage. What it is doing is taking an R value and storing it into a L value.
+An R value does not always have to be a literal. It can also be the result of a function. Maybe we have a function called GetValue() which returns 10. In this case GetValue() returns an R value. It returns a temporary value. It's temporary because even though it returns an int, it has no location. It has no storage. What it is doing is taking an R value and storing it into a L value.
 
 
 Now because GetValue returns an R value, If we try and assign something to that R value it is not going to work. So **GetValue() = 5;** is not going to work.
 
-However, this is where it get interesting. 
+However, this is where it get interesting.   [time 6:22](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s#t=06m22s)
 
 ```
 //int& GetValue()
@@ -56,6 +57,6 @@ void main()
 values.d(13): Error: GetValue() is not an lvalue and cannot be modified
 ```
 
-if this was to return an L value which we could do by doing an int reference (this is called an L value reference) then I would require some type of storage for my value (maybe by using a static ing like above and then returning it. if this is the case, since this is now and L value pretending to be a L value reference, I can assign to it  
+if this was to return an L value which we could do by returning an int reference (this is called an L value reference) then I would require some type of storage for my value (maybe by using a static int like above and then returning it. if this is the case, since this is now an L value pretending to be a L value reference, I can assign to it  
 
 
