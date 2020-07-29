@@ -42,8 +42,7 @@ Now because GetValue returns an R value, If we try and assign something to that 
 However, this is where it get interesting.   [time 6:22](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s#t=06m22s)
 
 ```
-//int& GetValue()
-int GetValue()
+int& GetValue()
 {
     static int value = 10;
     return value;
@@ -53,10 +52,60 @@ void main()
 {
 	GetValue() = 5;  // line 13
 }
-
-values.d(13): Error: GetValue() is not an lvalue and cannot be modified
 ```
 
-if this was to return an L value which we could do by returning an int reference (this is called an L value reference) then I would require some type of storage for my value (maybe by using a static int like above and then returning it. if this is the case, since this is now an L value pretending to be a L value reference, I can assign to it  
+if GetValue() was to return an L value which we could do by returning an int reference (**int&** is called an L value reference) then I would need to provide some type of storage for my value (maybe by using a static int like above and then returning it. if this is the case, since this is now an L value pretending to be a L value reference, I can assign to so the expression **GetValue() = 5;** works on the left side.
 
+
+The D Language does not have the int& syntax. It uses the word ref like below
+
+```
+import std.stdio;
+
+__gshared int* persist = null;
+
+ref int foo()
+{
+    auto p = new int;
+    persist = p;
+    writeln("persist and p should be identical   persist = ", persist, "   p = ",p);
+    return *p;
+}
+
+
+void main()
+{
+    writeln("before foo() call");
+    writeln("persist = ", persist);
+
+    foo() = 3;   // reference returns can be L values
+
+    writeln("after foo() call");
+    writeln("*persist = ", *persist);
+    writeln("persist = ", persist);
+}
+
+```
+
+To expand on the this a bit, if I had the function [time 6:55](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s#t=06m55s) that set a value like below:
+
+```
+void SetValue(int value)
+
+
+void SetValue(int& value)
+{
+}
+
+void main()
+{
+    int i = 10;
+    SetValue(i);  // calling SetValue with an L value
+    SetValue(10); // calling SetValue with an R value
+}
+```
+
+I could call this function a number of ways. I can call it with an L value or an R value. In SetValue(10), The 10 is a temporary R value.
+
+Another rule is you can not take a L value reference from a R value. So you could only have a L value reference from an L value.  
 
