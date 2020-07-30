@@ -72,7 +72,6 @@ ref int foo()
     return *p;
 }
 
-
 void main()
 {
     writeln("before foo() call");
@@ -84,8 +83,17 @@ void main()
     writeln("*persist = ", *persist);
     writeln("persist = ", persist);
 }
-
 ```
+The output of the above D code shows how a function can return an L value
+```
+before foo() call
+persist = null
+persist and p should be identical   persist = 21C15961010   p = 21C15961010
+after foo() call
+*persist = 3
+persist = 21C15961010
+```
+
 
 To expand on the this a bit, if I had the function [time 6:55](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s#t=06m55s) that set a value like below:
 
@@ -120,3 +128,20 @@ void main()
 ```
 
 The compiler will display the error: __cannot pass rvalue argument 10 of type int to parameter ref int value__
+
+In C++ there is actually a special rule and that is that while I cannot have an L value reference of an R value (so in other words I can't ahve someting like this **int& a = 10** if it is Const L value reference I can. So if you write **const int& a = 10;** this works. This is just a special rule; it is kind of a little bit of a workaround. Realistically what happens is that the compiler will probably create like a temporary variable with your actual storage and then assign it to that reference like so
+
+```
+//  int& a = 10;    becomes
+int temp = 10;
+int& = temp;
+```
+
+
+
+
+
+
+
+
+
