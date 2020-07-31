@@ -23,7 +23,7 @@ We have a variable called i which is of course an actual variable with a locatio
 R value as a non-literal   [time 5:34](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s#t=05m34s)
 
 ```
-int GetValue()
+int GetValue()   // returns a temporary R value
 {
     return 10;
 }
@@ -39,7 +39,7 @@ An R value does not always have to be a literal. It can also be the result of a 
 
 Now because GetValue returns an R value, If we try and assign something to that R value it is not going to work. So **GetValue() = 5;** is not going to work.
 
-However, this is where it get interesting.   [time 6:22](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s#t=06m22s)
+##L value reference   [time 6:22](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s#t=06m22s)
 
 ```
 int& GetValue()
@@ -117,12 +117,16 @@ L value when the function is actually called.
 Another rule is you cannot take an L value reference from an R value. So you can only have a L value reference of an L value.  I can demonstrate this by trying to pass an R value into 
 
 ```
+import std.stdio;   // D code  C++ would use int& value
+
 void SetValue(ref int value)  // L value (Location value - memory)
 {
 }
 
 void main()
 {
+    int i = 7;
+    SetValue(i);   // works
     SetValue(10);  // this will not compile      
 }
 ```
@@ -137,11 +141,82 @@ int temp = 10;
 int& = temp;
 ```
 
+# ***
+## R value reference   [time 8:45](https://www.youtube.com/watch?v=fbYknr-HPYE&t=720s#t=08m45s)
+
+The following C++ example  using strings. The last printName call will not compile because and R value is being passed into a L value. 
+
+```
+#include <iostream>
+
+void printName(std::string& name)  // L value reference
+{
+    std:cout << name << std::endl;
+}
+
+int main()
+{
+    std::string firstName = "Yan";
+    std::string lastName = "Cherno";
+    std::string fullName = firstName + lastName
+    
+    printName(fullName);
+    printName(firstName + lastName);  // expression, R value  - fails when passed to an L value.
+}
+
+```
+
+Which is why you will see lots of const references being written in C++ because not both calls work.
 
 
+```
+void printName(const std::string& name)  // const L value reference
+{
+    std:cout << name << std::endl;
+}
+
+int main()
+{
+    printName(fullName);
+    printName(firstName + lastName);  // works 
+}
+```
+
+Do we have a way to write a function that only accepts temporary object? Yes, we do this with an R value reference. An R value reference looks like an L value reference except it has two ampersands.   
 
 
+```
+void printName(const std::string&& name)  // R value reference
+{
+    std:cout << name << std::endl;
+}
 
+int main()
+{
+    printName(fullName);              // expression, L value  - fails when passed to an R value reference 
+    printName(firstName + lastName);  // works 
+}
+```
+Now the failures are reversed from the previous example.
 
+We can now write an over load this function like so
 
+```
+void printName(const std::string& name)  // Accepts L values and if no && exists, then R values as well
+{
+    std:cout << "L values " << name << std::endl;
+}
+
+void printName(const std::string&& name)  // Only accepts temporary objects - R values
+{
+    std:cout << "R values " << name << std::endl;
+}
+
+int main()
+{
+    printName(fullName);              // expression, L value  - fails when passed to an R value reference 
+    printName(firstName + lastName);  // works 
+}
+```
+With R value references, we now have a way to detect temporaries and do something special with them. This is especially useful for move semantics.  Which is for another video.
 
