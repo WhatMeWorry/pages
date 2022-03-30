@@ -1,0 +1,94 @@
+
+
+PowerShell Find  
+
+$searchinfolder = 'C:\'
+$filename = 'dmd.exe'
+Get-ChildItem -ErrorAction SilentlyContinue -Path $searchinfolder -Filter $filename -Recurse | %{$_.FullName}
+
+
+Get-ChildItem  -ErrorAction SilentlyContinue -Path $searchinfolder -Filter $filename -Recurse | %{$_.FullName}
+C:\D\dmd2\windows\bin\dmd.exe
+C:\D\dmd2\windows\bin64\dmd.exe
+
+$filename = 'lld-link.exe'
+Get-ChildItem  -ErrorAction SilentlyContinue -Path $searchinfolder -Filter $filename -Recurse | %{$_.FullName}
+C:\D\dmd2\windows\bin\lld-link.exe
+C:\D\dmd2\windows\bin64\lld-link.exe
+
+
+
+
+After downloading 
+
+
+Add the following entries to the Windows User Environment Variable PATH:
+%~dp0dmd2\windows\bin
+%~dp0dmd2\windows\bin64
+
+
+========================= Customized dmd2vars64.bat =========================
+
+@echo.
+@echo Setting up 64-bit environment for using DMD 2 from %~dp0dmd2\windows\bin.
+@echo.
+@echo what does this do %~dp0
+
+@echo The zero argument would be the name of this batch file itself:
+@echo The zero argument to this batch file is %0
+@echo fully qualified path name for the zero argument %~f0
+@echo path only for the zero argument %~p0
+@echo file name only for the zero argument %~n0
+@echo file extension only for the zero argument %~x0
+@echo file attributes of file for the zero argument %~a0
+@echo date/time of file for the zero argument %~t0
+@echo size of the file for the zero argument %~z0
+@echo expands zero argument to a DIR like output line %~ftza0
+
+@echo dmd must still be called with -m64 in order to generate 64-bit code.
+@echo This command prompt adds the path of extra 64-bit DLLs so generated programs
+@echo which use the extra DLLs (notably libcurl) can be executed.
+@set PATH=%~dp0dmd2\windows\bin;%PATH%
+@set PATH=%~dp0dmd2\windows\bin64;%PATH%
+
+@echo Add the following entries to the Windows User Environment Variable PATH:
+@echo %~dp0dmd2\windows\bin
+@echo %~dp0dmd2\windows\bin64
+
+@echo PATH is now %PATH%
+
+-----------------------------------------------------------------------------------------------
+C:\D>dmd2vars64.bat
+
+Setting up 64-bit environment for using DMD 2 from C:\D\dmd2\windows\bin.
+
+what does this do C:\D\
+The zero argument would be the name of this batch file itself:
+The zero argument to this batch file is dmd2vars64.bat
+fully qualified path name for the zero argument C:\D\dmd2vars64.bat
+path only for the zero argument \D\
+file name only for the zero argument dmd2vars64
+file extension only for the zero argument .bat
+file attributes of file for the zero argument --a--------
+date/time of file for the zero argument 03/27/2022 04:13 PM
+size of the file for the zero argument 1135
+expands zero argument to a DIR like output line --a-------- 03/27/2022 04:13 PM 1135 C:\D\dmd2vars64.bat
+dmd must still be called with -m64 in order to generate 64-bit code.
+This command prompt adds the path of extra 64-bit DLLs so generated programs
+which use the extra DLLs (notably libcurl) can be executed.
+Add the following entries to the Windows User Environment Variable PATH:
+C:\D\dmd2\windows\bin
+C:\D\dmd2\windows\bin64
+PATH is now C:\D\dmd2\windows\bin64;C:\D\dmd2\windows\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;
+C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;
+C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;
+C:\D\dmd2\windows\bin;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\bin\Hostx64\x64;
+C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;
+C:\Program Files (x86)\dub;C:\Program Files\Git\cmd;C:\Users\kheaser\AppData\Local\Microsoft\WindowsApps;
+C:\Users\kheaser\AppData\Local\Programs\Microsoft VS Code\bin;C:\ldc2\bin;C:\D\dmd2\windows\bin;C:\D\dmd2\windows\bin64;
+
+
+In short, edit the user PATH environment variable: Add 
+
+C:\D\dmd2\windows\bin
+C:\D\dmd2\windows\bin64
