@@ -2,39 +2,41 @@
 
 p = {x: 400, y:400}
 size = 100;
-p2 = {x: 600, y:600}
 
 
 function setup() 
 {
     createCanvas(800, 800);
   
-    //h1 = new hex(p, size);
-    //h2 = new hex(p2, 75);   
-  
     hexes = []; // array of hex objects
 
-    for (let i = 0; i < 50; i++) 
+    for (let i = 0; i < 150; i++) 
     {
         p.x = random(1,width);
         p.y = random(1,height);      
         hexes.push(new hex(p, random(50,100)));
     } 
+  
+    // noloop() Stops p5.js from continuously executing the code within draw(). 
+    // If loop() is called, the code in draw() begins to run continuously again. If using 
+    // noLoop() in setup(), it should be the last line inside the block.  
+
+    noLoop(); 
 }
+
+
 
 function draw() 
 {
     background(220);
-    //line(200,200,600,600);
-    //h1.drawHex();
-    //h2.drawHex(); 
   
     for (i = 0; i < hexes.length; i++) 
     {
         hexes[i].drawHex();
-    }
+    } 
 }  
-  
+ 
+
 
 class hex 
 {
@@ -49,7 +51,7 @@ class hex
         // middle = p.y;
         // bottom = p.y - (size * 0.866);
  
-      // screens coordinates are flipped horizontally from cartesion coordinates
+        // screens coordinates are flipped horizontally from cartesion coordinates
         this.one   = {x: p.x+size,     y: p.y}
         this.two   = {x: p.x+(size/2), y: p.y+(size*0.866)}
         this.three = {x: p.x-(size/2), y: p.y+(size*0.866)}
@@ -65,7 +67,12 @@ class hex
     }
 
     drawHex() 
-    {     //  draw from this point            to this point
+    { 
+        // R, G & B integer values
+        stroke(random(0,255),random(0,255), random(0,255));     
+        strokeWeight(random(7,10));      
+      
+        //  draw from this point            to this point
         line(this.one.x, this.one.y,     this.two.x, this.two.y);
         line(this.two.x, this.two.y,     this.three.x, this.three.y);   
         line(this.three.x, this.three.y, this.four.x, this.four.y);
@@ -74,11 +81,3 @@ class hex
         line(this.six.x, this.six.y,     this.one.x, this.one.y);
     }
 }
-
-
-
-
-
-
-
-
