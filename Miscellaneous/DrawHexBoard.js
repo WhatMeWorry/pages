@@ -1,4 +1,4 @@
-
+// https://www.javascripttutorial.net/javascript-multidimensional-array/
 
 p = {x: 50, y:50}
 size = 50;
@@ -22,19 +22,49 @@ function setup()
             // hexBoard[x][y].push(new hex(p, size));  // error
             
             hexBoard[x][y] = new hex(p, size);
+            p.size = p.size + xDelta;
             console.log(x, y);
         }
     }
-
+    //console.log("hexBoard.length = ", hexBoard[].length);
+    console.table(hexBoard);
+  
+    noLoop();
 }
+
+
 
 function draw() 
 {
     background(220);
-    for (i = 0; i < hexes.length; i++) 
+  
+    // loop the outer array
+    for (let i = 0; i < hexBoard.length; i++) 
     {
-        hexes[i].drawHex();        
+        // get the size of the inner array
+        var innerArrayLength = hexBoard[i].length;
+      
+        // loop the inner array
+        for (let j = 0; j < innerArrayLength; j++) 
+        {
+            console.log('[' + i + ',' + j + '] = ' + hexBoard[i][j]);
+        }
     }
+    
+    // loop the outer array
+    for (let i = 0; i < hexBoard.length; i++) 
+    {
+        // get the size of the inner array
+        var innerArrayLength = hexBoard[i].length;
+      
+        // loop the inner array
+        for (let j = 0; j < innerArrayLength; j++) 
+        {
+            tempHex = hexBoard[i][j];
+            tempHex.drawHex();
+        }
+    }
+  
 }  
   
 
@@ -64,7 +94,7 @@ class hex
     {   
         // R, G & B integer values
         stroke(random(0,255),random(0,255), random(0,255));     
-        strokeWeight(random(7,10));
+        strokeWeight(random(1,1));
         //    draw from this point            to this point
         line(this.one.x, this.one.y,     this.two.x, this.two.y);
         line(this.two.x, this.two.y,     this.three.x, this.three.y);   
