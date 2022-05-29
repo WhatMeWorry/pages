@@ -1,7 +1,17 @@
 // https://www.javascripttutorial.net/javascript-multidimensional-array/
 
-p = {x: 50, y:50}
-size = 50;
+
+// The var statement declares a function-scoped or globally-scoped variable, 
+// optionally initializing it to a value.
+
+// The let statement declares a block-scoped local variable, optionally 
+// initializing it to a value.
+
+
+var size = 50;   // size is length of a line from hex center two anyone of its six points 
+
+var p = {x: 50, y: size * 0.866}  // remember that a hex is not symmetrical square
+
 
 
 function setup() 
@@ -10,25 +20,30 @@ function setup()
   
     hexBoard = [];
 
-    xDelta = size * 2;
-    yDelta = (size * 0.866) * 2;
+    xDelta = size * 1.5;
+    yDelta = 2 * (size * 0.866);
+    offset = (size * 0.866);
   
-    for (x = 0; x < 5; x++) 
+    for (let i = 0; i < 8; i++)     // for each row       
     {
-        hexBoard[x] = []; // create nested array
-        for (y = 0; y < 5; y++)
+        hexBoard[i] = []; // create nested array
+        p.x = 50;
+        for (j = 0; j < 8; j++)     // for each column
         {
-
             // hexBoard[x][y].push(new hex(p, size));  // error
             
-            hexBoard[x][y] = new hex(p, size);
-            p.size = p.size + xDelta;
-            console.log(x, y);
+            hexBoard[i][j] = new hex(p, size);
+            p.x = p.x + xDelta;
+      
+            if (j % 2 == 0) {
+                p.y = p.y + offset;
+            } else {
+                p.y = p.y - offset;            
+            }                               
         }
+        p.y = p.y + yDelta;
     }
-    //console.log("hexBoard.length = ", hexBoard[].length);
     console.table(hexBoard);
-  
     noLoop();
 }
 
@@ -42,12 +57,12 @@ function draw()
     for (let i = 0; i < hexBoard.length; i++) 
     {
         // get the size of the inner array
-        var innerArrayLength = hexBoard[i].length;
+        let columnLen = hexBoard[i].length;
       
         // loop the inner array
-        for (let j = 0; j < innerArrayLength; j++) 
+        for (let j = 0; j < columnLen; j++) 
         {
-            console.log('[' + i + ',' + j + '] = ' + hexBoard[i][j]);
+            //console.log('[' + i + ',' + j + '] = ' + hexBoard[i][j]);
         }
     }
     
@@ -55,13 +70,14 @@ function draw()
     for (let i = 0; i < hexBoard.length; i++) 
     {
         // get the size of the inner array
-        var innerArrayLength = hexBoard[i].length;
+        let columnLen = hexBoard[i].length;
       
         // loop the inner array
-        for (let j = 0; j < innerArrayLength; j++) 
+        for (let j = 0; j < columnLen; j++) 
         {
             tempHex = hexBoard[i][j];
             tempHex.drawHex();
+            tempHex.dumpData();
         }
     }
   
@@ -72,6 +88,7 @@ class hex
 {
     constructor(p, size) 
     {
+        console.log("p = ", p);
         //  farLeft = p.x - size; 
         //     left = p.x - (size/2);
         //    right = p.x + (size/2); 
@@ -90,11 +107,19 @@ class hex
         this.six   = {x: p.x+(size/2), y: p.y-(size*0.866)}
     }
 
+  
+    dumpData()
+    {
+        console.log("this.one = ", this.one);
+        console.log("this.two = ", this.two);      
+    }
+  
+  
     drawHex() 
     {   
         // R, G & B integer values
-        stroke(random(0,255),random(0,255), random(0,255));     
-        strokeWeight(random(1,1));
+        stroke(0,0,0);     
+        strokeWeight(2);
         //    draw from this point            to this point
         line(this.one.x, this.one.y,     this.two.x, this.two.y);
         line(this.two.x, this.two.y,     this.three.x, this.three.y);   
