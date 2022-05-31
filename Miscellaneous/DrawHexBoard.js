@@ -24,11 +24,13 @@ function setup()
     yDelta = 2 * (size * 0.866);
     offset = (size * 0.866);
   
-    for (let i = 0; i < 8; i++)     // for each row       
+    for (let i = 0; i < 13; i++)     // for each row       
     {
         hexBoard[i] = []; // create nested array
         p.x = 50;
-        for (j = 0; j < 8; j++)     // for each column
+        p.y = (i * yDelta) + offset;     
+      
+        for (j = 0; j < 13; j++)     // for each column
         {
             // hexBoard[x][y].push(new hex(p, size));  // error
             
@@ -41,7 +43,6 @@ function setup()
                 p.y = p.y - offset;            
             }                               
         }
-        p.y = p.y + yDelta;
     }
     console.table(hexBoard);
     noLoop();
