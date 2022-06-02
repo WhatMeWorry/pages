@@ -17,6 +17,8 @@ var oneFourth = size/4;
 var sixEighths = (2 * size) * 0.75;
 var oneEighths = size/8;
 
+var hexHeight = 2 * (size * 0.866)
+
 
 function setup() 
 {
@@ -100,12 +102,29 @@ function draw()
 // this function fires only when cnv is clicked
 function handleMousePressed() 
 {
-    console.log("mouse (X, Y) = ", mouseX, mouseY);
-  
-    var row = (mouseX-oneFourth)/vertDiv;
-    row = Math.floor(row);
+    //console.log("mouse (X, Y) = ", mouseX, mouseY);
 
-    console.log("row = ", row);  
+    var row = 0;
+    var col = 0;
+  
+    col = (mouseX-oneFourth)/vertDiv;
+    col = Math.floor(col);
+  
+    if (col % 2 == 0) 
+    {
+        row = mouseY/hexHeight;  
+    } 
+    else 
+    {
+        row = (mouseY-(0.5 * hexHeight))/hexHeight;                                   
+    }
+    row = Math.floor(row);
+  
+    console.log("(row,colum) = (", row, ',', col, ')'); 
+  
+    tempHex = hexBoard[row][col];
+    tempHex.setColor();
+    draw(); 
 }
 
 
@@ -126,6 +145,8 @@ class hex
  
         this.center = { x: p.x, y: p.y}
       
+        this.r = 150;  this.g = 150;  this.b = 150;
+      
       // screens coordinates are flipped horizontally from cartesion coordinates
         this.one   = {x: p.x+size,     y: p.y}
         this.two   = {x: p.x+(size/2), y: p.y+(size*0.866)}
@@ -135,6 +156,13 @@ class hex
         this.six   = {x: p.x+(size/2), y: p.y-(size*0.866)}
     }
 
+    setColor()
+    {
+        console.log("color = ", this.r, this.g, this.b);
+        this.r = 255;
+        this.g = 0;
+        this.b = 0;
+    }
   
     displayCenter()
     {
@@ -151,12 +179,15 @@ class hex
       
         //circle(this.center.x, this.center.y, offset*2);
       
-        //    draw from this point            to this point
-        line(this.one.x, this.one.y,     this.two.x, this.two.y);
-        line(this.two.x, this.two.y,     this.three.x, this.three.y);   
-        line(this.three.x, this.three.y, this.four.x, this.four.y);
-        line(this.four.x, this.four.y,   this.five.x, this.five.y);
-        line(this.five.x, this.five.y,   this.six.x, this.six.y);
-        line(this.six.x, this.six.y,     this.one.x, this.one.y);
+        beginShape();
+        //fill(random(0, 255), random(0, 255), random(0, 255));
+        fill(this.r, this.g, this.b);      
+        vertex(this.one.x, this.one.y);
+        vertex(this.two.x, this.two.y);
+        vertex(this.three.x, this.three.y);
+        vertex(this.four.x, this.four.y);
+        vertex(this.five.x, this.five.y);
+        vertex(this.six.x, this.six.y);
+        endShape(CLOSE);          
     }
 }
