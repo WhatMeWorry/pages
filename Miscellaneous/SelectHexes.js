@@ -12,6 +12,10 @@ var size = 50;   // size is length of a line from hex center two anyone of its s
 
 var p = {x: 50, y: size * 0.866}  // remember that a hex is not symmetrical square
 
+var vertDiv = size * 1.5;  // 
+var oneFourth = size/4;
+var sixEighths = (2 * size) * 0.75;
+var oneEighths = size/8;
 
 
 function setup() 
@@ -26,13 +30,13 @@ function setup()
     yDelta = 2 * (size * 0.866);
     offset = (size * 0.866);
   
-    for (let i = 0; i < 6; i++)     // for each row       
+    for (let i = 0; i < 10; i++)     // for each row       
     {
         hexBoard[i] = []; // create nested array
         p.x = 50;
         p.y = (i * yDelta) + offset;     
       
-        for (j = 0; j < 13; j++)     // for each column
+        for (j = 0; j < 10; j++)     // for each column
         {
             // hexBoard[x][y].push(new hex(p, size));  // error
             
@@ -56,11 +60,15 @@ function draw()
 {
     background(220);
   
+    line(oneFourth,0, oneFourth, 500);
+  
     // loop the outer array
     for (let i = 0; i < hexBoard.length; i++) 
     {
         // get the size of the inner array
         let columnLen = hexBoard[i].length;
+
+        line((i*sixEighths)+oneFourth,0, (i*sixEighths)+oneFourth, 500);
       
         // loop the inner array
         for (let j = 0; j < columnLen; j++) 
@@ -74,6 +82,8 @@ function draw()
     {
         // get the size of the inner array
         let columnLen = hexBoard[i].length;
+ 
+        //line(i*vertDiv,0, i*vertDiv, 500);      
       
         // loop the inner array
         for (let j = 0; j < columnLen; j++) 
@@ -91,7 +101,14 @@ function draw()
 function handleMousePressed() 
 {
     console.log("mouse (X, Y) = ", mouseX, mouseY);
+  
+    var row = (mouseX-oneFourth)/vertDiv;
+    row = Math.floor(row);
+
+    console.log("row = ", row);  
 }
+
+
 
 class hex 
 {
@@ -132,7 +149,7 @@ class hex
         stroke(0,0,0);     
         strokeWeight(2);
       
-        circle(this.center.x, this.center.y, offset*2);
+        //circle(this.center.x, this.center.y, offset*2);
       
         //    draw from this point            to this point
         line(this.one.x, this.one.y,     this.two.x, this.two.y);
