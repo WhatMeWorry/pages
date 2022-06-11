@@ -23,8 +23,11 @@ var hexHeight = 2 * (size * 0.866)
 function setup() 
 {
 
-    cnv = createCanvas(800, 800);
-    cnv.mousePressed(handleMousePressed); // attach listener  
+    canvas = createCanvas(800, 800);
+    
+    canvas.parent('put-sketch-here');
+    
+    canvas.mousePressed(handleMousePressed); // attach listener  
   
     hexBoard = [];
 
