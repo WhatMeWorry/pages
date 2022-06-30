@@ -246,7 +246,16 @@ else
     tHex = hexBoard[row][col];
     tHex.drawCircle();
     row = row - 1;
-    tHex = hexBoard[row][col];
+    if (row >= 0)
+    {
+        tHex = hexBoard[row][col];
+    }
+    else
+    {
+        row = 0;
+        console.log("row was negative");
+    }
+    
     tHex.drawCircle();  
   
 }
