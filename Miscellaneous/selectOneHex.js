@@ -109,11 +109,11 @@ function draw()
     {
         let columnLen = hexBoard[i].length;
 
-        //line((i*threeFourths),0, (i*threeFourths), 500); 
+        line((i*threeFourths),0, (i*threeFourths), 500); 
       
         for (let j = 0; j < columnLen; j++) 
         {
-            //line(0, (j*halfHexHeight), 800, (j*halfHexHeight));
+            line(0, (j*halfHexHeight), 800, (j*halfHexHeight));
         }      
       
       
@@ -132,120 +132,172 @@ function getDistance(x1, y1, x2, y2)
 }
 
 
+function convertGridRowToHexRow(r)
+{
+    if (!isEven(r))
+    {
+        r = r - 1;   
+    }
+    return (r / 2);   
+}
+
 // this function fires only when cnv is clicked
 function handleMousePressed() 
 {
     //console.log("mouse (X, Y) = ", mouseX, mouseY);
 
-    var row = 0;
+    var gridCol = Math.floor(mouseX / threeFourths);
+  
+    var gridRow = Math.floor(mouseY / halfHexHeight); 
+  
+    //    (even, even)  |  (even odd)
+    //    -------------------------------
+    //    (odd, even)   |  (odd, odd)
+  
+    var candidates = [];
+  
+    // will need both square grid and hex grid coordinates
+  
+    //var row = convertGridRowToHexRow(gridRow);
+    //var col = gridCol;
+  
+
+    var row = 0;  
     var col = 0;
   
-    //col = (mouseX-oneFourth)/vertDiv;
-    mX = mouseX;
-    colf = mouseX / threeFourths;
-    col = Math.floor(colf);
   
-    rowf = mouseY / halfHexHeight;
-    row = Math.floor(rowf); 
-  
-//    (even, even)  |  (even odd)
-//    -------------------------------
-//     (odd, even)  |   (odd, odd)
-  
-     //nsole.log("(rowf,colf) = (", rowf, ',', colf, ')');
-     console.log("(row,col) = (", row, ',', col, ')'); 
-
-
-  
-// tHex = hexBoard[row][col];
-  
-  
-// find the Anchor Hex. These are the hexes in the positive columns
-  
-if (!isEven(col))
-{
-    col = col - 1;
-}
-
-if (!isEven(row))
-{
-    row = row - 1;   
-}
-row = row / 2;
-  
-  
-console.log("Anchor Hex is ", row, ",", col);
-  
-
-  
-  
-// All four quadrants are mapped to the hex on the left  
-  
-/*  
-if (isEven(row))
-{
-    if (isEven(col))
-    {
-        //console.log("(even,even)"); 
+    if (isEven(gridRow) && isEven(gridCol))
+    {    
+        console.log("Even - Even ===============================");
+      
+        // gridRow is always going to be even, so just divide by 2
+        row = gridRow / 2;
+        col = gridCol;
+      
+        // hex must either be hexBoard[row][col] or [row-1][col-1]
+      
+        tHex = hexBoard[row][col];  
+        candidates.push(tHex); 
+      
+        if (row > 0)   // guard agains negative indices
+        {
+            tHex = hexBoard[row-1][col-1];  
+            candidates.push(tHex);             
+        }
+      
     }
-    else
+    if (isEven(gridRow) && !isEven(gridCol))
     {
-        //console.log("(even,odd)");    
+        console.log("Even - Odd *******************************");  
+  
+        // gridRow is always going to be even, so just divide by 2
+        row = (gridRow / 2) - 1;
+        col = gridCol;
+      
+        // hex must either be hexBoard[row][col] or [row+1][col-1]
+
+        if (row >= 0)   // guard agains negative indices
+        {
+            tHex = hexBoard[row][col];  
+            candidates.push(tHex);          
+        }
+
+        tHex = hexBoard[row+1][col-1];  
+        candidates.push(tHex);                  
     }
-} 
-else
-{
-    if (isEven(col))
+    
+ 
+    if (!isEven(gridRow) && isEven(gridCol))
     {
-       //console.log("(odd,even)"); 
+        console.log("Odd - Even @@@@@@@@@@@@@@@@@@@@@@@@@");  
+  
+        // gridRow is always going to be odd, so 
+        row = (gridRow - 1) / 2;
+        col = gridCol;
+      
+        // hex must either be hexBoard[row][col] or [row][col-1]
+      
+        tHex = hexBoard[row][col];  
+        candidates.push(tHex);                 
+
+        if (col > 0)   // guard agains negative indices
+        {
+            tHex = hexBoard[row][col-1];  
+            candidates.push(tHex);          
+        }
     }
-    else
+
+    if (!isEven(gridRow) && !isEven(gridCol))
     {
-       //console.log("(odd,odd)"); 
-    }  
-}
-*/
+        console.log("Odd - Odd ++++++++++++++++++++++++++++");  
+  
+        // gridRow is always going to be odd, so 
+        row = (gridRow - 1) / 2;
+        col = gridCol;
+      
+        // hex must either be hexBoard[row][col] or [row][col-1]
+      
+        tHex = hexBoard[row][col];  
+        candidates.push(tHex);                 
+
+        if (col > 0)   // guard agains negative indices
+        {
+            tHex = hexBoard[row][col-1];  
+            candidates.push(tHex);          
+        }
+      
+    }     
+      
+  
+      
+    console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
+    console.log("(row,col) = (", row, ',', col, ')');              
+  
+ 
+ 
 
     draw();  // redraw the hex board mainly to clear any circles
 
-    var arr = [];  
   
-    tHex = hexBoard[row][col];  
-    //arr.push(tHex.center);
-    arr.push(tHex); 
-    
-    //tHex.drawCircle();
-  
-    col = col + 1;
-    tHex = hexBoard[row][col];
-    //arr.push(tHex.center);
-    arr.push(tHex);  
-  
-    //tHex.drawCircle();
-  
-    row = row - 1;
-    if (row >= 0)
-    {
-        tHex = hexBoard[row][col];
-        //arr.push(tHex.center);
-        arr.push(tHex);
-        //tHex.drawCircle();
-    }
-    else
-    {
-        row = 0;
-        //console.log("row was negative");
-    }
-    
+/*
     //tHex.drawCircle(); 
+*/
   
-    console.log("arr = ", arr);  
-    for (i = 0; i < arr.length; i++) {
-        tempHex =  arr[i];
-        //tempHex.drawCircle();
-        arr[i].drawCircle();
+  
+
+    console.log("candidates.length = ", candidates.length);  
+
+
+  
+    if (candidates.length == 2)
+    {
+        // find the hex that is closest to the mouse click
+        var len0 = getDistance(candidates[0].center.x,   candidates[0].center.y,   mouseX, mouseY);
+        var len1 = getDistance(candidates[1].center.x,   candidates[1].center.y,   mouseX, mouseY);
+        if (len0 < len1)
+        {
+            // Starting at index position 1, remove 1 element (len1)
+            candidates.splice(1,1);
+        }   
+        else
+        {
+            candidates.splice(0,1);    // len1 is the shortest distance from the mouse click.
+        }
     }
   
+   
+
+    console.log("candidates.length = ", candidates.length);  
+    for (i = 0; i < candidates.length; i++) {
+        tempHex =  candidates[i];
+        //tempHex.drawCircle();
+        candidates[i].drawCircle();
+    }
+            
+      
+    
+ 
+  /*
     closestHexIndex = 0;  // Assume first hex is closest
     shortest = getDistance(arr[0].center.x,   arr[0].center.y,   mouseX, mouseY);
     console.log("shortest = ", shortest);
@@ -262,7 +314,8 @@ else
     console.log("closestHexIndex = ", closestHexIndex);
   
     arr[closestHexIndex].drawCircle(); 
-  
+ 
+*/
   /*
     var distances = [];
     for (i = 0; i < arr.length; i++) {     
