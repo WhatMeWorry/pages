@@ -204,7 +204,7 @@ function handleMousePressed()
             }
             else
             {
-              if (row > 1 || col > 1)
+              if (row > 1 && col > 1)
               {
                  tHex = hexBoard[row-1][col-1];  
                  candidates.push(tHex);                             
