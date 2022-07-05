@@ -12,15 +12,18 @@ var size = 50;   // size is length of a line from hex center two anyone of its s
 
 var p = {x: size, y: size * 0.866}  // remember that a hex is not symmetrical square
 
-var vertDiv = size * 1.5;  // 
-var oneFourth = size/4;
-var sixEighths = (2 * size) * 0.75;
+var vertDiv = size * 1.5; 
+var oneFourth = (size*2) / 4;
+var sixEighths = (size * 2) * 0.75;
 var threeFourths = sixEighths;
-var oneEighths = size/8;
+var oneEighths = (size*2) / 8;
 
 
 var hexHeight = 2 * (size * 0.866)
 var halfHexHeight = hexHeight / 2;
+
+var maxRows = 5;
+var maxCols = 8;
 
 function setup() 
 {
@@ -37,13 +40,13 @@ function setup()
     yDelta = 2 * (size * 0.866);
     offset = (size * 0.866);
   
-    for (let i = 0; i < 10; i++)     // for each row       
+    for (let i = 0; i < maxRows; i++)     // for each row       
     {
         hexBoard[i] = []; // create nested array
         p.x = size;
         p.y = (i * yDelta) + offset;     
       
-        for (j = 0; j < 10; j++)     // for each column
+        for (j = 0; j <  maxCols; j++)     // for each column
         {
             // hexBoard[x][y].push(new hex(p, size));  // error
             
@@ -72,15 +75,10 @@ function isEven(i)
 function draw() 
 {
     background(220);
-  
-    //line(oneFourth,0, oneFourth, 500);
-  
-    // loop the outer array
-    for (let i = 0; i < hexBoard.length; i++) 
+     
+    for (let i = 0; i < hexBoard.length; i++)    // loop the outer array
     {
         let columnLen = hexBoard[i].length;      // size of the inner array
-
-        //line((i*threeFourths),0, (i*threeFourths), 500);      
       
         for (let j = 0; j < columnLen; j++)      // loop inner array
         {
@@ -114,10 +112,7 @@ function draw()
         for (let j = 0; j < columnLen; j++) 
         {
             line(0, (j*halfHexHeight), 800, (j*halfHexHeight));
-        }      
-      
-      
-      
+        }           
     } 
   
   
@@ -174,17 +169,60 @@ function handleMousePressed()
         row = gridRow / 2;
         col = gridCol;
       
-        // hex must either be hexBoard[row][col] or [row-1][col-1]
+        // hex must either be hexBoard[row][col] or hexBoard[row-1][col-1] or out of bounds
       
-        tHex = hexBoard[row][col];  
-        candidates.push(tHex); 
+        tHex = hexBoard[row][col]; 
       
-        if (row > 0)   // guard agains negative indices
+        // get the center point of hexBoard[row][col] to calculate left side.
+        // console.log("oneFourth = ",oneFourth);
+        var leftSide = tHex.center.x - oneFourth;
+        // console.log("mouseX = ",mouseX);
+        // console.log("leftSide = ",leftSide);
+        if (mouseX > leftSide)
         {
-            tHex = hexBoard[row-1][col-1];  
-            candidates.push(tHex);             
+            candidates.push(tHex);
+            console.log("*****************************Inside Rectangle");
         }
-      
+        else
+        {  
+          console.log("halfHexHeight = ",halfHexHeight);
+            var farLeft = tHex.center.x - size;
+            var adjacent = mouseX - farLeft;
+            console.log("adjacent = ",adjacent);         
+            // tan(60) = 1.73205080757
+            // tan(angle) = opposite / adjacent 
+            opposite = adjacent * 1.7320;
+          
+            tall = tHex.center.y - mouseY;
+           
+            console.log("opposite = ",opposite);
+            console.log("tall = ",tall);          
+            if (opposite > tall)   // 
+            {
+                tHex = hexBoard[row][col];  
+                candidates.push(tHex);             
+            }
+            else
+            {
+              if (row > 1 || col > 1)
+              {
+                 tHex = hexBoard[row-1][col-1];  
+                 candidates.push(tHex);                             
+              }
+              else
+              {
+                  console.log("DID NOT HIT A HEX on the canvas") 
+              }
+              
+              
+              
+              
+            }
+               
+          
+        }
+         
+
     }
     if (isEven(gridRow) && !isEven(gridCol))
     {
@@ -416,3 +454,4 @@ class hex
       
     }
 }
+
