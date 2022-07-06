@@ -22,17 +22,55 @@ var oneEighths = (size*2) / 8;
 var hexHeight = 2 * (size * 0.866)
 var halfHexHeight = hexHeight / 2;
 
-var maxRows = 5;
+var maxRows = 8;
 var maxCols = 8;
+
+
+
+function calculateCanvasWidth(columns)
+{
+    let full = 0;
+    let squeezed = 0;
+    if (isEven(columns))
+    {
+        squeezed = (columns)/2;
+        full = squeezed;
+        return ((size*2*full)+(size*squeezed)+oneFourth);
+    }
+    else
+    {
+        squeezed = (columns-1)/2;
+        full = squeezed + 1;
+        return ((size*2*full)+(size*squeezed)); 
+    } 
+}
+
+
+
+function calculateCanvasHeight(rows, cols)
+{
+    if (cols > 1)
+    {
+         return ((rows * hexHeight) + halfHexHeight); 
+    }
+    else
+    {
+         return (rows * hexHeight);   // rows should be alwways equal to 1 
+    }
+}
+
+
 
 function setup() 
 {
-
-    let canvas = createCanvas(800, 800);
+    canvasWidth = calculateCanvasWidth(maxCols); 
+    canvasHeight = calculateCanvasHeight(maxRows, maxCols);   
+  
+    let canvas = createCanvas(canvasWidth, canvasHeight);
     
     //canvas.parent("put-sketch-here");
     
-    canvas.mousePressed(handleMousePressed); // attach listener  
+    canvas.mousePressed(handleMousePressed);  // attach listener  
   
     hexBoard = [];
 
@@ -91,8 +129,6 @@ function draw()
     {
         // get the size of the inner array
         let columnLen = hexBoard[i].length;
- 
-        //line(i*vertDiv,0, i*vertDiv, 500);      
       
         // loop the inner array
         for (let j = 0; j < columnLen; j++) 
@@ -102,19 +138,20 @@ function draw()
             //tempHex.displayCenter();
         }
     }
-  
-    for (let i = 0; i < hexBoard.length; i++) 
-    {
-        let columnLen = hexBoard[i].length;
 
-        line((i*threeFourths),0, (i*threeFourths), 500); 
+   
+    for (let m = 0; m < maxCols+1; m++) 
+    {
+        // draw vertical lines     
+        line((m*threeFourths),0, (m*threeFourths), canvasHeight); 
       
-        for (let j = 0; j < columnLen; j++) 
+        for (let n = 0; n < (maxRows*2)+1; n++) 
         {
-            line(0, (j*halfHexHeight), 800, (j*halfHexHeight));
+            // draw horizontal lines
+            line(0, (n*halfHexHeight), canvasWidth, (n*halfHexHeight));
         }           
     } 
-  
+
   
 }  
 
@@ -454,4 +491,3 @@ class hex
       
     }
 }
-
