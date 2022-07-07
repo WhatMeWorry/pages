@@ -12,9 +12,9 @@
 //============================================================================
 // ============ All calculations follow from these primary parameters ========
 //============================================================================
-var radius = 50;   // length of a line from hex center two anyone of its six points 
-var maxRows = 7;
-var maxCols = 7;
+var radius = 100;   // length of a line from hex center two anyone of its six points 
+var maxRows = 6;
+var maxCols = 6;
 //============================================================================
 
 // apothem is distance from the hex center to the midpoint of any side.
@@ -206,7 +206,7 @@ function handleMousePressed()
     var col = 0;
   
   
-    if (isEven(gridRow) && isEven(gridCol))
+    if (isEven(gridRow) && isEven(gridCol))   // DONE : Upper Left of quadrant
     {    
         console.log("Even - Even ===============================");
       
@@ -260,9 +260,8 @@ function handleMousePressed()
                 }       
             }
         }
-         
-
     }
+  
     if (isEven(gridRow) && !isEven(gridCol))
     {
         console.log("Even - Odd *******************************");  
@@ -271,16 +270,67 @@ function handleMousePressed()
         row = (gridRow / 2) - 1;
         col = gridCol;
       
+        console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
+        console.log("(row,col) = (", row, ',', col, ')');              
+      
         // hex must either be hexBoard[row][col] or [row+1][col-1]
 
         if (row >= 0)   // guard agains negative indices
         {
+            // hex must either be hexBoard[row][col] or hexBoard[row+1][col-1] or out of bounds         
+          
             tHex = hexBoard[row][col];  
-            candidates.push(tHex);          
+
+            // get the center point of hexBoard[row][col] to calculate left side.
+            // console.log("oneFourth = ",oneFourth);
+            var leftSide2 = tHex.center.x - oneFourth;
+            // console.log("mouseX = ",mouseX);
+            // console.log("leftSide = ",leftSide);
+            if (mouseX > leftSide2)
+            {
+                candidates.push(tHex);
+                console.log("*****************************Inside Rectangle");
+            }  
+            else
+            {  
+                var farLeft2 = tHex.center.x - radius;
+                var adjacent2 = mouseX - farLeft2;
+                console.log("adjacent2 = ",adjacent2);         
+                // tan(60) = 1.73205080757
+                // tan(angle) = opposite / adjacent 
+                opposite = adjacent2 * 1.7320;     // This is the 
+              
+              
+                var top = tHex.center.y + apothem;
+                tall = top - mouseY;
+              
+              
+                console.log("mouseY = ",mouseY);         
+           
+                console.log("opposite = ",opposite);
+                console.log("tall = ",tall);          
+                if (tall > opposite)   // 
+                {
+                    tHex = hexBoard[row][col];  
+                    //candidates.push(tHex);             
+                }
+                else
+                {
+                    //if (row > 1 && col > 1)
+                    {
+                        //tHex = hexBoard[row-1][col-1];  
+                        //candidates.push(tHex);                             
+                    }
+                    //else
+                    {
+                        //console.log("DID NOT HIT A HEX on the canvas") 
+                    }         
+                }
+            }        
         }
 
-        tHex = hexBoard[row+1][col-1];  
-        candidates.push(tHex);                  
+        //tHex = hexBoard[row+1][col-1];  
+        //candidates.push(tHex);                  
     }
     
  
@@ -327,8 +377,8 @@ function handleMousePressed()
       
   
       
-    console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
-    console.log("(row,col) = (", row, ',', col, ')');              
+    //console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
+    //console.log("(row,col) = (", row, ',', col, ')');              
   
  
  
@@ -493,3 +543,4 @@ class hex
       
     }
 }
+
