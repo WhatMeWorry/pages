@@ -7,24 +7,30 @@
 // The let statement declares a block-scoped local variable, optionally 
 // initializing it to a value.
 
+// radius is the line (distance) from the hex center to any vertex
 
-var size = 50;   // size is length of a line from hex center two anyone of its six points 
+//============================================================================
+// ============ All calculations follow from these primary parameters ========
+//============================================================================
+var radius = 50;   // length of a line from hex center two anyone of its six points 
+var maxRows = 7;
+var maxCols = 7;
+//============================================================================
 
-var p = {x: size, y: size * 0.866}  // remember that a hex is not symmetrical square
+// apothem is distance from the hex center to the midpoint of any side.
+var apothem = radius * 0.866;
 
-var vertDiv = size * 1.5; 
-var oneFourth = (size*2) / 4;
-var sixEighths = (size * 2) * 0.75;
+var p = {x: radius, y: apothem}  // note: a hex is not symmetrically square
+
+var vertDiv = radius * 1.5; 
+var oneFourth = (radius*2) / 4;
+var sixEighths = (radius * 2) * 0.75;
 var threeFourths = sixEighths;
-var oneEighths = (size*2) / 8;
+var oneEighths = (radius*2) / 8;
 
 
-var hexHeight = 2 * (size * 0.866)
+var hexHeight = 2 * (radius * 0.866)
 var halfHexHeight = hexHeight / 2;
-
-var maxRows = 8;
-var maxCols = 8;
-
 
 
 function calculateCanvasWidth(columns)
@@ -35,13 +41,13 @@ function calculateCanvasWidth(columns)
     {
         squeezed = (columns)/2;
         full = squeezed;
-        return ((size*2*full)+(size*squeezed)+oneFourth);
+        return ((radius*2*full)+(radius*squeezed)+oneFourth);
     }
     else
     {
         squeezed = (columns-1)/2;
         full = squeezed + 1;
-        return ((size*2*full)+(size*squeezed)); 
+        return ((radius*2*full)+(radius*squeezed)); 
     } 
 }
 
@@ -74,21 +80,21 @@ function setup()
   
     hexBoard = [];
 
-    xDelta = size * 1.5;
-    yDelta = 2 * (size * 0.866);
-    offset = (size * 0.866);
+    xDelta = radius * 1.5;
+    yDelta = 2 * (radius * 0.866);
+    offset = (radius * 0.866);
   
     for (let i = 0; i < maxRows; i++)     // for each row       
     {
         hexBoard[i] = []; // create nested array
-        p.x = size;
+        p.x = radius;
         p.y = (i * yDelta) + offset;     
       
         for (j = 0; j <  maxCols; j++)     // for each column
         {
-            // hexBoard[x][y].push(new hex(p, size));  // error
+            // hexBoard[x][y].push(new hex(p, radius));  // error
             
-            hexBoard[i][j] = new hex(p, size);
+            hexBoard[i][j] = new hex(p, radius);
             p.x = p.x + xDelta;
       
             if (j % 2 == 0) {
@@ -116,7 +122,7 @@ function draw()
      
     for (let i = 0; i < hexBoard.length; i++)    // loop the outer array
     {
-        let columnLen = hexBoard[i].length;      // size of the inner array
+        let columnLen = hexBoard[i].length;      // radius of the inner array
       
         for (let j = 0; j < columnLen; j++)      // loop inner array
         {
@@ -127,7 +133,7 @@ function draw()
     // loop the outer array
     for (let i = 0; i < hexBoard.length; i++) 
     {
-        // get the size of the inner array
+        // get the radius of the inner array
         let columnLen = hexBoard[i].length;
       
         // loop the inner array
@@ -172,6 +178,8 @@ function convertGridRowToHexRow(r)
     }
     return (r / 2);   
 }
+
+
 
 // this function fires only when cnv is clicked
 function handleMousePressed() 
@@ -222,8 +230,8 @@ function handleMousePressed()
         }
         else
         {  
-          console.log("halfHexHeight = ",halfHexHeight);
-            var farLeft = tHex.center.x - size;
+            console.log("halfHexHeight = ",halfHexHeight);
+            var farLeft = tHex.center.x - radius;
             var adjacent = mouseX - farLeft;
             console.log("adjacent = ",adjacent);         
             // tan(60) = 1.73205080757
@@ -241,22 +249,16 @@ function handleMousePressed()
             }
             else
             {
-              if (row > 1 && col > 1)
-              {
-                 tHex = hexBoard[row-1][col-1];  
-                 candidates.push(tHex);                             
-              }
-              else
-              {
-                  console.log("DID NOT HIT A HEX on the canvas") 
-              }
-              
-              
-              
-              
+                if (row > 1 && col > 1)
+                {
+                    tHex = hexBoard[row-1][col-1];  
+                    candidates.push(tHex);                             
+                }
+                else
+                {
+                    console.log("DID NOT HIT A HEX on the canvas") 
+                }       
             }
-               
-          
         }
          
 
@@ -416,29 +418,29 @@ function handleMousePressed()
 
 class hex 
 {
-    constructor(p, size) 
+    constructor(p, radius) 
     {
 
-        //  farLeft = p.x - size; 
-        //     left = p.x - (size/2);
-        //    right = p.x + (size/2); 
-        // farRight = p.x + size;
+        //  farLeft = p.x - radius; 
+        //     left = p.x - (radius/2);
+        //    right = p.x + (radius/2); 
+        // farRight = p.x + radius;
       
-        //    top = p.y + (size * 0.866);
+        //    top = p.y + (radius * 0.866);
         // middle = p.y;
-        // bottom = p.y - (size * 0.866);
+        // bottom = p.y - (radius * 0.866);
  
         this.center = { x: p.x, y: p.y}
       
         this.r = 150;  this.g = 150;  this.b = 150;
       
       // screens coordinates are flipped horizontally from cartesion coordinates
-        this.one   = {x: p.x+size,     y: p.y}
-        this.two   = {x: p.x+(size/2), y: p.y+(size*0.866)}
-        this.three = {x: p.x-(size/2), y: p.y+(size*0.866)}
-        this.four  = {x: p.x-size,     y: p.y}
-        this.five  = {x: p.x-(size/2), y: p.y-(size*0.866)}
-        this.six   = {x: p.x+(size/2), y: p.y-(size*0.866)}
+        this.one   = {x: p.x+radius,     y: p.y}
+        this.two   = {x: p.x+(radius/2), y: p.y+(radius*0.866)}
+        this.three = {x: p.x-(radius/2), y: p.y+(radius*0.866)}
+        this.four  = {x: p.x-radius,     y: p.y}
+        this.five  = {x: p.x-(radius/2), y: p.y-(radius*0.866)}
+        this.six   = {x: p.x+(radius/2), y: p.y-(radius*0.866)}
     }
 
     setColor()
