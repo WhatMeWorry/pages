@@ -10,8 +10,8 @@
 // ============ All calculations follow from these primary parameters ========
 //============================================================================
 var radius = 150;   // length of a line from hex center two anyone of its six points
-var maxRows = 6;
-var maxCols = 6;
+var maxRows = 3;
+var maxCols = 3;
 //============================================================================
 
 // apothem is distance from the hex center to the midpoint of any side.
@@ -58,7 +58,7 @@ function calculateCanvasHeight(rows, cols)
     }
     else
     {
-         return (rows * hexHeight);   // rows should be alwways equal to 1
+         return (rows * hexHeight);   // rows should be always equal to 1
     }
 }
 
@@ -176,7 +176,7 @@ function convertGridRowToHexRow(r)
     return (r / 2);  
 }
 
-function clickedInLeftTriangle(mX, mY, x, y)
+function clickedInLowerLeftTriangle(mX, mY, x, y)
 {
     var right = x - oneFourth;
     var adj = right - mX;
@@ -195,6 +195,29 @@ function clickedInLeftTriangle(mX, mY, x, y)
     }
     return false;                      
 }
+
+
+function clickedinUpperLeftTriangle(mX, mY, x, y)
+{
+    var left = x - radius;
+    var adj = mX - left;
+  
+    // tan(60) = 1.7320
+    // tan(theta) = opp / adj
+             
+    var opp = adj * 1.7320;
+             
+    var bot = y;
+    var tall = bot - mouseY;
+             
+    if (tall > opp)
+    {
+        return true;
+    }
+    return false;                      
+}
+
+
 
 
 // this function fires only when cnv is clicked
@@ -303,7 +326,7 @@ function handleMousePressed()
       
         // hex must either be hexBoard[row][col] or [row+1][col-1]
 
-        if (clickedInLeftTriangle(mouseX, mouseY, x, y))
+        if (clickedInLowerLeftTriangle(mouseX, mouseY, x, y))
         {
             tHex = hexBoard[row+1][col-1];
             candidates.push(tHex);
@@ -323,23 +346,36 @@ function handleMousePressed()
         }
     }
  
-    if (!isEven(gridRow) && isEven(gridCol))
+    if (!isEven(gridRow) && isEven(gridCol))  // DONE : Lower Left Quadrant
     {
         console.log("Odd - Even @@@@@@@@@@@@@@@@@@@@@@@@@");  
  
         // gridRow is always going to be odd, so
         row = (gridRow - 1) / 2;
         col = gridCol;
-     
+ 
+        console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
+        console.log("(row,col) = (", row, ',', col, ')');                    
+ 
+        centerX = hexBoard[row][col].center.x;
+        centerY = hexBoard[row][col].center.y;                
+      
         // hex must either be hexBoard[row][col] or [row][col-1]
-     
-        tHex = hexBoard[row][col];  
-        candidates.push(tHex);                
-
-        if (col > 0)   // guard agains negative indices
+      
+        if (clickedInLowerLeftTriangle(mouseX, mouseY, centerX, centerY))
         {
-            tHex = hexBoard[row][col-1];  
-            candidates.push(tHex);          
+            if (col > 0)
+            {
+                tHex = hexBoard[row][col-1];
+                candidates.push(tHex);              
+            }
+            else console.log("OUT OF BOUNDS");
+
+        }          
+        else
+        {         
+            tHex = hexBoard[row][col]; 
+            candidates.push(tHex);
         }
     }
 
@@ -350,25 +386,35 @@ function handleMousePressed()
         // gridRow is always going to be odd, so
         row = (gridRow - 1) / 2;
         col = gridCol;
-     
+ 
+        //console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
+        //console.log("(row,col) = (", row, ',', col, ')');                     
+      
         // hex must either be hexBoard[row][col] or [row][col-1]
-     
-        tHex = hexBoard[row][col];  
-        candidates.push(tHex);                
-
-        if (col > 0)   // guard agains negative indices
+      
+        cenX = hexBoard[row][col].center.x;
+        cenY = hexBoard[row][col].center.y;  
+      
+        if (clickedinUpperLeftTriangle(mouseX, mouseY, cenX, cenY))
         {
-            tHex = hexBoard[row][col-1];  
-            candidates.push(tHex);          
-        }
+            console.log("INSIDE TRIANGLE");  
+            
+            //if (col > 0)
+            {
+                tHex = hexBoard[row][col-1];
+                candidates.push(tHex);              
+            }
+            //else console.log("OUT OF BOUNDS");
+            
+        }          
+        else
+        {    
+             console.log("OUTSIDE TRIANGLE");
+             tHex = hexBoard[row][col]; 
+             candidates.push(tHex);
+        }  
      
     }    
-     
- 
-     
-    //console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
-    //console.log("(row,col) = (", row, ',', col, ')');              
- 
  
  
 
