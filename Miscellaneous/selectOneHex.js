@@ -162,7 +162,22 @@ function draw()
         }          
     }
 
- 
+    for (let m = 0; m < maxCols+1; m++)
+    {
+        for (let n = 0; n < (maxRows*2)+1; n++)
+        {
+            stroke(0,0,255);  
+            strokeWeight(2);
+            if (isEven(m) && isEven(n))
+            {
+                circle( (m * threeFourths) + threeFourths/2, (n * halfHexHeight) + halfHexHeight/2, 3);              
+            }
+
+            
+            //line(0, (n*halfHexHeight), canvasWidth, (n*halfHexHeight));
+        }          
+    }  
+
 }  
 
 function getDistance(x1, y1, x2, y2)
@@ -226,7 +241,6 @@ function clickedinUpperLeftTriangle(mX, mY, x, y)
 
 
 
-
 // this function fires only when cnv is clicked
 function handleMousePressed()
 {
@@ -260,10 +274,15 @@ function handleMousePressed()
         col = gridCol;
      
         // hex must either be hexBoard[row][col] or hexBoard[row-1][col-1] or out of bounds
-      
+ 
         console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
         console.log("(row,col) = (", row, ',', col, ')'); 
-
+        console.log("maxGridCols = ", maxGridCols);
+        console.log("maxCols = ", maxCols);
+        console.log("maxGridRows = ", maxGridRows);
+      
+        // Form B and C are the most degenerate because they a completely empty rectanles
+      
         if ( isEven(maxCols) && (gridCol == maxGridCols-1) && (gridRow == 0))
         {
             console.log("FORM B");
@@ -276,26 +295,23 @@ function handleMousePressed()
         {
             console.log("FORM C");
             selectedHex = 0;          
-        }     
-        else if ( (gridRow == maxGridRows-1) &&
-                  (isEven(gridCol)) )
-        {
-            console.log("FORM F");
-            selectedHex = 0;          
-        }           
-        else if (col == maxCols)
-        {       
+        } 
+        else if ( (col == maxCols) ||   // along the right edge of hex board
+                  ((gridRow == maxGridRows-1) && isEven(gridCol))  // or bottom edge
+                )
+        {  
+            console.log("FORM D or FORM F");
             centerX = hexBoard[row-1][col-1].center.x + threeFourths;
             centerY = hexBoard[row-1][col-1].center.y + halfHexHeight;  
 
             if (clickedinUpperLeftTriangle(mouseX, mouseY, centerX, centerY))
             { 
-                console.log("FORM D - Inside Hex");
+                console.log("    Inside Hex");
                 selectedHex = hexBoard[row-1][col-1];
             }
             else
             {
-                console.log("FORM D - Outside Hex");
+                console.log("    Outside Hex");
                 selectedHex = 0;               
             }
         }
@@ -601,5 +617,3 @@ class hex
      
     }
 }
-
-
