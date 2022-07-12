@@ -10,8 +10,8 @@
 // ============ All calculations follow from these primary parameters ========
 //============================================================================
 var radius = 100;   // length of a line from hex center two anyone of its six points
-var maxRows = 5;
-var maxCols = 5;
+var maxRows = 3;
+var maxCols = 3;
 //============================================================================
 
 var maxGridCols = maxCols + 1;
@@ -166,12 +166,18 @@ function draw()
     {
         for (let n = 0; n < (maxRows*2)+1; n++)
         {
-            stroke(0,0,255);  
+            
             strokeWeight(2);
             if (isEven(m) && isEven(n))
             {
-                circle( (m * threeFourths) + threeFourths/2, (n * halfHexHeight) + halfHexHeight/2, 3);              
+                //stroke(0,0,255);  
+                //circle( (m * threeFourths) + threeFourths/2, (n * halfHexHeight) + halfHexHeight/2, 3);             
             }
+            else if (!isEven(m) && isEven(n))
+            {
+                stroke(255,0,0);  
+                circle( (m * threeFourths) + threeFourths/2, (n * halfHexHeight) + halfHexHeight/2, 3);             
+            }            
 
             
             //line(0, (n*halfHexHeight), canvasWidth, (n*halfHexHeight));
@@ -264,7 +270,7 @@ function handleMousePressed()
     var centerX = 0;
     var centerY = 0;
 
-  
+ /*  
     if (isEven(gridRow) && isEven(gridCol))   // DONE : Upper Left Quadrant
     {  
         console.log("Even - Even ===============================");
@@ -340,9 +346,9 @@ function handleMousePressed()
             }  
         }
     }
+*/  
   
-  
-/*
+
     if (isEven(gridRow) && !isEven(gridCol))  // DONE : Upper Right Quadrant
     {
         console.log("Even - Odd *******************************");  
@@ -350,15 +356,23 @@ function handleMousePressed()
         // gridRow is always going to be even, so just divide by 2
         row = (gridRow / 2) -1;
         col = gridCol;
-     
-        console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
-        console.log("(row,col) = (", row, ',', col, ')');              
-
-        if (row == -1)
+      
+        //console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
+        console.log("(row,col) = (", row, ',', col, ')'); 
+        //console.log("maxGridCols = ", maxGridCols);
+        //console.log("maxCols = ", maxCols);
+        //console.log("maxGridRows = ", maxGridRows);
+      
+        if ((gridRow == maxGridRows-1) && (gridCol == maxGridCols-1))
+        {     
+            console.log("FORM E"); 
+            selectedHex = 0;        
+        }
+        else if ((row == -1) || (col == maxCols))
         {
-            console.log("VERY TOP OF HEXBOARD");
-            centerX = hexBoard[0][col-1].center.x + threeFourths;
-            centerY = hexBoard[0][col-1].center.y - halfHexHeight; 
+            console.log("FORM A or D   Top or Right Edge");
+            centerX = hexBoard[row+1][col-1].center.x + threeFourths;
+            centerY = hexBoard[row+1][col-1].center.y - halfHexHeight; 
             if (clickedInLowerLeftTriangle(mouseX, mouseY, centerX, centerY))
             {
                 selectedHex = hexBoard[row+1][col-1];
@@ -371,30 +385,32 @@ function handleMousePressed()
           
           
         }     
-        else //if (gridRow == (maxRows*2))  
+        else
         {
-            //console.log("VERY BOTTOM OF HEXBOARD");
+            console.log("FORM B or C");
             centerX = hexBoard[row][col].center.x;
             centerY = hexBoard[row][col].center.y; 
             if (clickedInLowerLeftTriangle(mouseX, mouseY, centerX, centerY))
             {            
-                if (row+1 == maxRows)
+                if (row == maxRows-1)
                 {
-                    console.log("OUTSIDE OF BOTTOM HEX"); 
+                    console.log("FORM C outside bottom hex"); 
                     selectedHex = 0;     
                 }
                 else
                 {
+                    console.log("FORM B");
                     selectedHex = hexBoard[row+1][col-1];
                 }
             }
             else
             {
+                console.log("FORM B within main hex");
                 selectedHex = hexBoard[row][col]; 
             }          
         }
     }
-*/ 
+
   
   
 /*  
@@ -406,8 +422,6 @@ function handleMousePressed()
  
         //console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
         //console.log("(row,col) = (", row, ',', col, ')');                    
-
-
         if (col < maxCols)
         {     
             centerX = hexBoard[row][col].center.x;
@@ -461,7 +475,6 @@ function handleMousePressed()
         console.log("(row,col) = (", row, ',', col, ')');                     
       
         // hex must either be hexBoard[row][col] or [row][col-1]
-
         if (col < maxCols)
         {     
             centerX = hexBoard[row][col].center.x;
@@ -520,7 +533,6 @@ function handleMousePressed()
             candidates.splice(0,1);    // len1 is the shortest distance from the mouse click.
         }
     }
-
     console.log("candidates.length = ", candidates.length);  
     for (i = 0; i < candidates.length; i++) {
         tempHex =  candidates[i];
