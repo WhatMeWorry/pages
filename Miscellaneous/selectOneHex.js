@@ -9,9 +9,9 @@
 //============================================================================
 // ============ All calculations follow from these primary parameters ========
 //============================================================================
-var radius = 100;   // length of a line from hex center two anyone of its six points
-var maxRows = 2;
-var maxCols = 4;
+var radius =  50;   // length of a line from hex center two anyone of its six points
+var maxRows = 10;
+var maxCols = 10;
 //============================================================================
 
 var maxGridCols = maxCols + 1;
@@ -153,12 +153,12 @@ function draw()
     for (let m = 0; m < maxCols+1; m++)
     {
         // draw vertical lines    
-        line((m*threeFourths),0, (m*threeFourths), canvasHeight);
+        //line((m*threeFourths),0, (m*threeFourths), canvasHeight);
      
         for (let n = 0; n < (maxRows*2)+1; n++)
         {
             // draw horizontal lines
-            line(0, (n*halfHexHeight), canvasWidth, (n*halfHexHeight));
+            //line(0, (n*halfHexHeight), canvasWidth, (n*halfHexHeight));
         }          
     }
 
@@ -166,30 +166,27 @@ function draw()
     {
         for (let n = 0; n < (maxRows*2)+1; n++)
         {
-            
             strokeWeight(2);
             if (isEven(m) && isEven(n))
             {
                 stroke(0,0,255);  
-                circle( (m * threeFourths) + threeFourths/2, (n * halfHexHeight) + halfHexHeight/2, 3);             
+                //circle( (m * threeFourths) + threeFourths/2, (n * halfHexHeight) + halfHexHeight/2, 3);           
             }
             else if (!isEven(m) && isEven(n))
             {
                 stroke(255,0,0);  
-                circle( (m * threeFourths) + threeFourths/2, (n * halfHexHeight) + halfHexHeight/2, 3);             
+                //circle( (m * threeFourths) + threeFourths/2, (n * halfHexHeight) + halfHexHeight/2, 3);           
             }  
             else if (isEven(m) && !isEven(n))
             {
                 stroke(0,255,0);  
-                circle( (m * threeFourths) + threeFourths/2, (n * halfHexHeight) + halfHexHeight/2, 3);             
+                //circle( (m * threeFourths) + threeFourths/2, (n * halfHexHeight) + halfHexHeight/2, 3);           
             }                   
             else if (!isEven(m) && !isEven(n))
             {
                 stroke(255,255,0);  
-                circle( (m * threeFourths) + threeFourths/2, (n * halfHexHeight) + halfHexHeight/2, 3);             
+                //circle( (m * threeFourths) + threeFourths/2, (n * halfHexHeight) + halfHexHeight/2, 3);             
             }            
-            
-            //line(0, (n*halfHexHeight), canvasWidth, (n*halfHexHeight));
         }          
     }  
 
@@ -279,22 +276,20 @@ function handleMousePressed()
     var centerX = 0;
     var centerY = 0;
 
-/* 
+
     if (isEven(gridRow) && isEven(gridCol))   // DONE : Upper Left Quadrant
-    {  
-        console.log("Even - Even ===============================");
-     
+    {       
         // gridRow is always going to be even, so just divide by 2
         row = gridRow / 2;
         col = gridCol;
      
         // hex must either be hexBoard[row][col] or hexBoard[row-1][col-1] or out of bounds
  
-        console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
-        console.log("(row,col) = (", row, ',', col, ')'); 
-        console.log("maxGridCols = ", maxGridCols);
-        console.log("maxCols = ", maxCols);
-        console.log("maxGridRows = ", maxGridRows);
+        //console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
+        //console.log("(row,col) = (", row, ',', col, ')'); 
+        //console.log("maxGridCols = ", maxGridCols);
+        //console.log("maxCols = ", maxCols);
+        //console.log("maxGridRows = ", maxGridRows);
       
         // Form B and C are the most degenerate because they a completely empty rectanles
       
@@ -355,19 +350,17 @@ function handleMousePressed()
             }  
         }
     }
-*/ 
+
   
-/*
+
     if (isEven(gridRow) && !isEven(gridCol))  // DONE : Upper Right Quadrant
-    {
-        console.log("Even - Odd *******************************");  
- 
+    { 
         // gridRow is always going to be even, so just divide by 2
         row = (gridRow / 2) -1;
         col = gridCol;
       
         //console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
-        console.log("(row,col) = (", row, ',', col, ')'); 
+        //console.log("(row,col) = (", row, ',', col, ')'); 
         //console.log("maxGridCols = ", maxGridCols);
         //console.log("maxCols = ", maxCols);
         //console.log("maxGridRows = ", maxGridRows);
@@ -390,9 +383,7 @@ function handleMousePressed()
             {
                  console.log("OUTSIDE OF HEX"); 
                  selectedHex = 0;
-            }
-          
-          
+            }        
         }     
         else
         {
@@ -419,7 +410,6 @@ function handleMousePressed()
             }          
         }
     }
-*/
   
   
 
@@ -429,11 +419,11 @@ function handleMousePressed()
         row = (gridRow - 1) / 2;
         col = gridCol;
  
-        console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
-        console.log("(row,col) = (", row, ',', col, ')'); 
-        console.log("maxGridCols = ", maxGridCols);
-        console.log("maxCols = ", maxCols);
-        console.log("maxGridRows = ", maxGridRows);      
+        //console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
+        //console.log("(row,col) = (", row, ',', col, ')'); 
+        //console.log("maxGridCols = ", maxGridCols);
+        //console.log("maxCols = ", maxCols);
+        //console.log("maxGridRows = ", maxGridRows);      
       
  
         if (col == 0)
@@ -490,21 +480,21 @@ function handleMousePressed()
         }
     }
 
-  
 
-/*
+
     if (!isEven(gridRow) && !isEven(gridCol))
     {
         // gridRow is always going to be odd, so
         row = (gridRow - 1) / 2;
         col = gridCol;
  
-        console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
-        console.log("(row,col) = (", row, ',', col, ')');                     
+        //console.log("(gridRow,gridCol) = (", gridRow, ',', gridCol, ')');  
+        //console.log("(row,col) = (", row, ',', col, ')');                     
       
         // hex must either be hexBoard[row][col] or [row][col-1]
         if (col < maxCols)
-        {     
+        {  
+            
             centerX = hexBoard[row][col].center.x;
             centerY = hexBoard[row][col].center.y;
         }
@@ -517,21 +507,24 @@ function handleMousePressed()
         if (clickedInUpperLeftTriangle(mouseX, mouseY, centerX, centerY))
         { 
             selectedHex = hexBoard[row][col-1];
+            console.log("FORM A - Small Triangle");
         }
         else
         {
             if (col < maxCols)
             {
                 selectedHex = hexBoard[row][col];
+                console.log("FORM A - Large Polygon ");
             }
             else
             {
                 console.log("TOO FAR RIGHT");
                 selectedHex = 0;
+                console.log("FORM B - Outside hex board ");
             }
         }
     }    
-*/
+
 
 
     draw();  // redraw the hex board mainly to clear any circles
