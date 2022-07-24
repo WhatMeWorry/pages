@@ -10,8 +10,8 @@
 // ============ All calculations follow from these primary parameters ========
 //============================================================================
 var radius =  50;   // length of a line from hex center two anyone of its six points
-var maxRows = 10;
-var maxCols = 10;
+var maxRows = 7;
+var maxCols = 13;
 //============================================================================
 
 var maxGridCols = maxCols + 1;
@@ -77,8 +77,13 @@ function setup()
     canvasHeight = calculateCanvasHeight(maxRows, maxCols);  
  
     let canvas = createCanvas(canvasWidth, canvasHeight);
-   
-    //canvas.parent("put-sketch-here");
+
+    
+    // Needs to match the html code call in pages/opengl/opengl.html file
+    // <script src="../Miscellaneous/SelectOneHex.js"></script>    
+    // <div id="ENTRY_SelectOneHex_js"></div>
+     
+    canvas.parent("ENTRY_SelectOneHex_js");   
    
     canvas.mousePressed(handleMousePressed);  // attach listener  
  
