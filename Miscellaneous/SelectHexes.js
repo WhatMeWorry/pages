@@ -9,7 +9,7 @@
 //============================================================================
 // ============ All calculations follow from these primary parameters ========
 //============================================================================
-var radius = 150;   // length of a line from hex center two anyone of its six points
+var radius =  75;   // length of a line from hex center two anyone of its six points
 var maxRows = 5;
 var maxCols = 5;
 //============================================================================
@@ -71,7 +71,11 @@ function setup()
  
     let canvas = createCanvas(canvasWidth, canvasHeight);
    
-    //canvas.parent("put-sketch-here");
+    // Needs to match the html code call in pages/opengl/opengl.html file
+    // <script src="../Miscellaneous/SelectHexes.js"></script>    
+    // <div id="ENTRY_TO_SelectHexes_JavaScript"></div>
+     
+    canvas.parent("ENTRY_TO_SelectHexes_JavaScript");
    
     canvas.mousePressed(handleMousePressed);  // attach listener  
  
